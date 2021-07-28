@@ -11,7 +11,9 @@ public class AnimatedPlayer : AnimatedSprite {
 		// milliseconds
 		delta *= 1000;
 		
-		Vector2 velocity = (Vector2) Owner.Get("velocity");
+		Player player = (Player) GetParent();
+		
+		Vector2 velocity = player.velocity;
 		if (velocity[0] < -EPSILON) {
 			FlipH = false;
 		}
@@ -20,12 +22,27 @@ public class AnimatedPlayer : AnimatedSprite {
 		}
 		
 		// do animation stuff
-		bool falling = (bool) Owner.Get("falling");
-		bool jumping = (bool) Owner.Get("jumping");
-		if (falling) {
+		bool dead = player.dead;
+		bool falling = player.falling;
+		bool jumping = player.jumping;
+		bool loop = true;
+		if (dead) {
+			if (Animation != "death") {
+				deltaTime = 0;
+			}
+			Animation = "death";
+			if (player.remainingForcedDeadTime > 0) {
+				deltaTime = Player.FORCED_DEAD_TIME - player.remainingForcedDeadTime;
+			} else {
+				deltaTime = player.remainingResurrectTime;
+			}
+			loop = false;
+		} else if (falling) {
 			Animation = "falling";
+			deltaTime = 0;
 		} else if (jumping) {
 			Animation = "jumping";
+			deltaTime = 0;
 		} else if (Math.Abs(velocity[0]) > EPSILON) {
 			Animation = "running";
 			deltaTime += Math.Abs(velocity[0]) / Player.MAX_VELOCITY * delta;
@@ -34,6 +51,10 @@ public class AnimatedPlayer : AnimatedSprite {
 			deltaTime += delta;
 		}
 		
-		Frame = (int) (deltaTime / MS_PER_FRAME) % Frames.GetFrameCount(Animation);
+		if (loop) {
+			Frame = (int) (deltaTime / MS_PER_FRAME) % Frames.GetFrameCount(Animation);
+		} else {
+			Frame = Math.Min((int) (deltaTime / MS_PER_FRAME), Frames.GetFrameCount(Animation) - 1);
+		}
 	}
 }
