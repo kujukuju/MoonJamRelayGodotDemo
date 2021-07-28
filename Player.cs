@@ -12,7 +12,7 @@ public class Player : KinematicBody2D {
 	const float GRAVITY = 1.2f;
 	const float JUMP_INSTANT_VELOCITY = 240;
 	const float JUMP_HOLD_ACCEL = 1.0f;
-	const float POP_TIME = 500;
+	const float POP_TIME = 1000;
 	
 	public Vector2 velocity = new Vector2(0, 0);
 	public bool jumping = false;
@@ -37,6 +37,7 @@ public class Player : KinematicBody2D {
 		remainingPoppedTime = Math.Max(remainingPoppedTime - delta, 0);
 		
 		// check spike collisions for death
+		bool angled = false;
 		if (!dead && killable) {
 			for (int i = 0; i < GetSlideCount(); i++) {
 				KinematicCollision2D collisions = GetSlideCollision(i);
@@ -46,6 +47,13 @@ public class Player : KinematicBody2D {
 					remainingForcedDeadTime = FORCED_DEAD_TIME;
 					remainingResurrectTime = FORCED_DEAD_TIME;
 				}
+			}
+		}
+		
+		for (int i = 0; i < GetSlideCount(); i++) {
+			KinematicCollision2D collisions = GetSlideCollision(i);
+			if (collisions.Collider.HasMeta("angled")) {
+				angled = true;
 			}
 		}
 		
@@ -64,8 +72,8 @@ public class Player : KinematicBody2D {
 			killable = true;
 		}
 		
-		bool left = Input.IsActionPressed("left") && !dead;
-		bool right = Input.IsActionPressed("right") && !dead;
+		bool left = Input.IsActionPressed("left") && !dead && !angled;
+		bool right = Input.IsActionPressed("right") && !dead && !angled;
 		bool up = Input.IsActionPressed("up") && !dead;
 		bool down = Input.IsActionPressed("down") && !dead;
 		bool jump = Input.IsActionPressed("jump") && !dead;
@@ -106,8 +114,8 @@ public class Player : KinematicBody2D {
 		}
 		
 		// jumping
-		bool onRightWall = TestMove(Transform, new Vector2(1, 0));
-		bool onLeftWall = TestMove(Transform, new Vector2(-1, 0));
+		bool onRightWall = TestMove(Transform, new Vector2(1, -2)) && TestMove(Transform, new Vector2(1, 2));
+		bool onLeftWall = TestMove(Transform, new Vector2(-1, -2)) && TestMove(Transform, new Vector2(-1, 2));
 		bool onWall = (onRightWall || onLeftWall) && onRightWall != onLeftWall;
 		
 		bool canJump = IsOnFloor() || onWall;
@@ -166,6 +174,6 @@ public class Player : KinematicBody2D {
 		velocity[1] += GRAVITY * delta * poppedMul;
 		falling = !IsOnFloor() && velocity[1] > EPSILON;
 		
-		velocity = MoveAndSlide(velocity, new Vector2(0, -1));
+		velocity = MoveAndSlide(velocity, new Vector2(0, -1), false, 4, (float) Math.PI / 16, true);
 	}
 }

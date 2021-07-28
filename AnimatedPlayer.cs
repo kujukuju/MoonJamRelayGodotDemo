@@ -27,9 +27,6 @@ public class AnimatedPlayer : AnimatedSprite {
 		bool jumping = player.jumping;
 		bool loop = true;
 		if (dead) {
-			if (Animation != "death") {
-				deltaTime = 0;
-			}
 			Animation = "death";
 			if (player.remainingForcedDeadTime > 0) {
 				deltaTime = Player.FORCED_DEAD_TIME - player.remainingForcedDeadTime;
