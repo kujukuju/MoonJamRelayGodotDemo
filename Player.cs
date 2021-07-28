@@ -122,7 +122,7 @@ public class Player : KinematicBody2D {
 		if (jumping && !jump) {
 			jumping = false;
 		}
-		if (jumping && canJump && velocity[1] > 0) {
+		if (jumping && canJump && velocity[1] >= 0) {
 			jumping = false;
 		}
 		
