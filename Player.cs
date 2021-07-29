@@ -4,7 +4,7 @@ using System;
 public class Player : KinematicBody2D {
 	public const float MAX_VELOCITY = 200;
 	public const float FORCED_DEAD_TIME = 400;
-	
+
 	const float EPSILON = 0.000001f;
 	const float ACCEL = 2.5f;
 	const float AIR_ACCEL = 2.5f;
@@ -13,7 +13,7 @@ public class Player : KinematicBody2D {
 	const float JUMP_INSTANT_VELOCITY = 240;
 	const float JUMP_HOLD_ACCEL = 1.0f;
 	const float POP_TIME = 1000;
-	
+
 	public Vector2 velocity = new Vector2(0, 0);
 	public bool jumping = false;
 	public bool falling = false;
@@ -22,7 +22,48 @@ public class Player : KinematicBody2D {
 	public float remainingResurrectTime = 0;
 	public bool dead = false;
 	public bool killable = true;
-	
+
+	public float timeSinceLastUpdate = 0.0f;
+
+	delegate void ProcessFunc(float delta);
+
+	ProcessFunc process;
+
+	public byte RemoteState {
+		get {
+			byte state = 0;
+			if (jumping)
+				state += 1 << 0;
+			if (falling)
+				state += 1 << 1;
+			if (dead)
+				state += 1 << 2;
+			if (killable)
+				state += 1 << 3;
+			return state;
+		}
+		set {
+			jumping  = (value & (1 << 0)) != 0;
+			falling  = (value & (1 << 1)) != 0;
+			dead     = (value & (1 << 2)) != 0;
+			killable = (value & (1 << 3)) != 0;
+		}
+	}
+
+	public override void _Ready() {
+		AddToGroup("players");
+		process = RemoteProcess;
+	}
+
+	public void InitLocal() {
+		AddToGroup("local_player");
+		process = LocalProcess;
+		Camera2D camera = new Camera2D();
+		AddChild(camera);
+		camera.Zoom = new Vector2(0.5f, 0.5f);
+		camera.Current = true;
+	}
+
 	public void Pop() {
 		remainingPoppedTime = POP_TIME;
 		velocity[0] /= 10;
@@ -30,6 +71,12 @@ public class Player : KinematicBody2D {
 	}
 
 	public override void _PhysicsProcess(float delta) {
+		if (process == null)
+			return;
+		process(delta);
+	}
+
+	public void LocalProcess(float delta) {
 		// milliseconds
 		delta *= 1000;
 		
@@ -174,6 +221,15 @@ public class Player : KinematicBody2D {
 		velocity[1] += GRAVITY * delta * poppedMul;
 		falling = !IsOnFloor() && velocity[1] > EPSILON;
 		
+		velocity = MoveAndSlide(velocity, new Vector2(0, -1), false, 4, (float) Math.PI / 16, true);
+	}
+
+	public void RemoteProcess(float delta) {
+		timeSinceLastUpdate += delta;
+		if (timeSinceLastUpdate > 4.0f) {
+			QueueFree();
+			return;
+		}
 		velocity = MoveAndSlide(velocity, new Vector2(0, -1), false, 4, (float) Math.PI / 16, true);
 	}
 }

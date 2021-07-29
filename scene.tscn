@@ -1079,6 +1079,7 @@ extents = Vector2( 10, 8 )
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 6 )
+playerScene = ExtResource( 12 )
 
 [node name="background" type="TileMap" parent="."]
 tile_set = SubResource( 47 )
@@ -1122,12 +1123,15 @@ cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( -4718538, 0, 3, -4521962, 1, 0, -4521961, 1, 2, -4390905, 0, 0, -4390904, 0, 1, -4390903, 0, 1, -4390902, 0, 2, -4390879, 1, 0, -4390878, 1, 2, -4390875, 1, 3, -4390870, 1, 0, -4390869, 1, 2, -4390866, 1, 0, -4390865, 1, 1, -4390864, 1, 2, -4259803, 0, 3, -4259794, 0, 3, -4194274, 0, 3, -4128761, 1, 3, -3932166, 0, 0, -3932165, 0, 1, -3932164, 0, 1, -3932163, 0, 1, -3932162, 0, 2, -3997691, 1, 3, -3997633, 0, 0, -3997632, 0, 1, -3997631, 0, 1, -3997630, 0, 1, -3997629, 0, 1, -3997628, 0, 1, -3997627, 0, 1, -3997626, 0, 1, -3997625, 0, 1, -3997624, 0, 1, -3997623, 0, 1, -3997622, 0, 1, -3997621, 0, 1, -3997620, 0, 1, -3997619, 0, 1, -3997618, 0, 1, -3997617, 0, 1, -3997616, 0, 1, -3997615, 0, 1, -3997614, 0, 1, -3997613, 0, 1, -3997612, 0, 1, -3997611, 0, 2, -3866617, 1, 3, -3801086, 1, 3, -3604475, 1, 3, -3604473, 1, 3, -3342334, 1, 3, -3342330, 1, 3, -3145736, 1, 0, -3145735, 1, 1, -3145734, 1, 1, -3145733, 1, 1, -3145732, 1, 2, -3145731, 0, 0, -3145730, 0, 2, -3080214, 1, 0, -3080213, 1, 1, -3080212, 1, 1, -3080211, 1, 1, -3080210, 1, 1, -3080209, 1, 1, -3080208, 1, 1, -3080207, 1, 1, -3080206, 1, 2, -3014676, 0, 0, -3014675, 0, 1, -3014674, 0, 2, -2752448, 1, 0, -2752447, 1, 1, -2752446, 1, 1, -2752445, 1, 2, -2293750, 1, 0, -2293749, 1, 1, -2293748, 1, 2, -1769496, 1, 0, -1769495, 1, 2, -1638424, 1, 0, -1638423, 1, 1, -1638422, 1, 1, -1638421, 1, 2, -1572756, 1, 0, -1572755, 1, 2, -1507317, 1, 3, -1507316, 0, 0, -1507315, 0, 1, -1507314, 0, 1, -1507313, 0, 2, -1376243, 1, 3, -1245169, 1, 3, -1114095, 1, 0, -1114094, 1, 2, -524269, 0, 0, -524268, 0, 2, -131053, 0, 0, -131052, 0, 1, -131051, 0, 1, -131050, 0, 1, -131049, 0, 1, -131048, 0, 1, -131047, 0, 1, -131046, 0, 1, -131045, 0, 1, -131044, 0, 2, -65527, 0, 3 )
 
+[node name="Start" type="Position2D" parent="."]
+position = Vector2( 48, 136 )
+
 [node name="bubbles" type="Node" parent="."]
 
 [node name="jumpbubble" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 688, 48 )
 frames = SubResource( 95 )
-frame = 12
+frame = 2
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1143,7 +1147,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble2" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 640, -464 )
 frames = SubResource( 95 )
-frame = 8
+frame = 12
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1159,7 +1163,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble3" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 8, -976 )
 frames = SubResource( 95 )
-frame = 6
+frame = 10
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1175,7 +1179,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble4" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 136, -1040 )
 frames = SubResource( 95 )
-frame = 5
+frame = 9
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1191,7 +1195,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble5" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 264, -1104 )
 frames = SubResource( 95 )
-frame = 13
+frame = 3
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1207,7 +1211,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble6" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 504, -800 )
 frames = SubResource( 95 )
-frame = 2
+frame = 6
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1223,7 +1227,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble7" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -120, -912 )
 frames = SubResource( 95 )
-frame = 9
+frame = 13
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1239,7 +1243,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble8" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -248, -848 )
 frames = SubResource( 95 )
-frame = 5
+frame = 9
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1255,7 +1259,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble9" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 312, -1952 )
 frames = SubResource( 95 )
-frame = 9
+frame = 13
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1271,7 +1275,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble10" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -352, -1042 )
 frames = SubResource( 95 )
-frame = 1
+frame = 5
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1287,7 +1291,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble11" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -352, -1302 )
 frames = SubResource( 95 )
-frame = 9
+frame = 13
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1303,7 +1307,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble12" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -352, -1237 )
 frames = SubResource( 95 )
-frame = 6
+frame = 10
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1319,7 +1323,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble13" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -352, -1172 )
 frames = SubResource( 95 )
-frame = 3
+frame = 7
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1335,7 +1339,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble14" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -352, -1107 )
 frames = SubResource( 95 )
-frame = 5
+frame = 9
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1351,7 +1355,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble15" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -352, -1368 )
 frames = SubResource( 95 )
-frame = 4
+frame = 8
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1367,7 +1371,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble16" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( -792, -1448 )
 frames = SubResource( 95 )
-frame = 1
+frame = 5
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1383,7 +1387,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble17" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 312, -1680 )
 frames = SubResource( 95 )
-frame = 11
+frame = 1
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1399,7 +1403,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble18" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 312, -1824 )
 frames = SubResource( 95 )
-frame = 6
+frame = 10
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1415,7 +1419,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble19" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 312, -2080 )
 frames = SubResource( 95 )
-frame = 8
+frame = 12
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1431,7 +1435,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble20" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 1744, -1336 )
 frames = SubResource( 95 )
-frame = 13
+frame = 4
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1447,7 +1451,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble21" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2064, -1552 )
 frames = SubResource( 95 )
-frame = 10
+frame = 1
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1463,7 +1467,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble22" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 3376, -944 )
 frames = SubResource( 95 )
-frame = 9
+frame = 13
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1479,7 +1483,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble23" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2064, -1680 )
 frames = SubResource( 95 )
-frame = 2
+frame = 7
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1495,7 +1499,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble24" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2064, -1424 )
 frames = SubResource( 95 )
-frame = 4
+frame = 9
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1511,6 +1515,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble26" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 3504, -816 )
 frames = SubResource( 95 )
+frame = 5
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1526,7 +1531,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble27" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2800, -1520 )
 frames = SubResource( 95 )
-frame = 8
+frame = 13
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1542,7 +1547,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble28" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 3440, -880 )
 frames = SubResource( 95 )
-frame = 3
+frame = 7
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1558,7 +1563,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble29" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 3312, -1008 )
 frames = SubResource( 95 )
-frame = 1
+frame = 5
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1574,7 +1579,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble30" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 3248, -1072 )
 frames = SubResource( 95 )
-frame = 6
+frame = 10
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1590,7 +1595,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble31" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 3184, -1136 )
 frames = SubResource( 95 )
-frame = 1
+frame = 5
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1606,7 +1611,6 @@ shape = SubResource( 96 )
 [node name="jumpbubble32" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2864, -1456 )
 frames = SubResource( 95 )
-frame = 9
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1622,7 +1626,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble33" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2928, -1392 )
 frames = SubResource( 95 )
-frame = 9
+frame = 13
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1638,7 +1642,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble34" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2992, -1328 )
 frames = SubResource( 95 )
-frame = 1
+frame = 6
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1654,7 +1658,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble35" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 3056, -1264 )
 frames = SubResource( 95 )
-frame = 10
+frame = 1
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1670,7 +1674,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble36" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 3120, -1200 )
 frames = SubResource( 95 )
-frame = 4
+frame = 9
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1686,7 +1690,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble37" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2544, -1776 )
 frames = SubResource( 95 )
-frame = 2
+frame = 6
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1702,7 +1706,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble38" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2608, -1712 )
 frames = SubResource( 95 )
-frame = 12
+frame = 2
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1718,7 +1722,6 @@ shape = SubResource( 96 )
 [node name="jumpbubble39" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2672, -1648 )
 frames = SubResource( 95 )
-frame = 10
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1734,7 +1737,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble40" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2736, -1584 )
 frames = SubResource( 95 )
-frame = 2
+frame = 7
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1750,7 +1753,6 @@ shape = SubResource( 96 )
 [node name="jumpbubble41" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2416, -1904 )
 frames = SubResource( 95 )
-frame = 9
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1766,7 +1768,7 @@ shape = SubResource( 96 )
 [node name="jumpbubble42" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 2480, -1840 )
 frames = SubResource( 95 )
-frame = 13
+frame = 3
 speed_scale = 2.0
 playing = true
 __meta__ = {
@@ -1938,7 +1940,7 @@ __meta__ = {
 shape = SubResource( 97 )
 
 [node name="Player" parent="." instance=ExtResource( 12 )]
-position = Vector2( 2104, -1368 )
+position = Vector2( 48, 136 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 current = true
