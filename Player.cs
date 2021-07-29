@@ -59,6 +59,8 @@ public class Player : KinematicBody2D {
 		AddToGroup("local_player");
 		process = LocalProcess;
 		Camera2D camera = new Camera2D();
+		// this enables bubble interactions just for the local player
+		CollisionMask |= 1 << 1;
 		AddChild(camera);
 		camera.Zoom = new Vector2(0.5f, 0.5f);
 		camera.Current = true;

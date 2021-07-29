@@ -1,4 +1,4 @@
-[gd_scene load_steps=110 format=2]
+[gd_scene load_steps=111 format=2]
 
 [ext_resource path="res://assets/08-Box/Idle.png" type="Texture" id=1]
 [ext_resource path="res://assets/14-TileSets/spikes.png" type="Texture" id=2]
@@ -12,6 +12,7 @@
 [ext_resource path="res://assets/08-Box/Angled Boxes.png" type="Texture" id=10]
 [ext_resource path="res://assets/11-Door/Idle.png" type="Texture" id=11]
 [ext_resource path="res://Player.tscn" type="PackedScene" id=12]
+[ext_resource path="res://JumpBubble.tscn" type="PackedScene" id=13]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -1128,47 +1129,14 @@ position = Vector2( 48, 136 )
 
 [node name="bubbles" type="Node" parent="."]
 
-[node name="jumpbubble" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 688, 48 )
-frames = SubResource( 95 )
-frame = 2
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble"]
-script = ExtResource( 8 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble2" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble2" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 640, -464 )
-frames = SubResource( 95 )
-frame = 12
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble2"]
-script = ExtResource( 8 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble2/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble3" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble3" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 8, -976 )
-frames = SubResource( 95 )
-frame = 10
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble3"]
 script = ExtResource( 8 )
@@ -1176,15 +1144,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble3/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble4" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble4" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 136, -1040 )
-frames = SubResource( 95 )
-frame = 9
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble4"]
 script = ExtResource( 8 )
@@ -1192,15 +1153,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble4/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble5" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble5" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 264, -1104 )
-frames = SubResource( 95 )
-frame = 3
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble5"]
 script = ExtResource( 8 )
@@ -1208,15 +1162,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble5/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble6" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble6" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 504, -800 )
-frames = SubResource( 95 )
-frame = 6
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble6"]
 script = ExtResource( 8 )
@@ -1224,15 +1171,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble6/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble7" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble7" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -120, -912 )
-frames = SubResource( 95 )
-frame = 13
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble7"]
 script = ExtResource( 8 )
@@ -1240,15 +1180,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble7/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble8" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble8" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -248, -848 )
-frames = SubResource( 95 )
-frame = 9
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble8"]
 script = ExtResource( 8 )
@@ -1256,15 +1189,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble8/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble9" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble9" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 312, -1952 )
-frames = SubResource( 95 )
-frame = 13
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble9"]
 script = ExtResource( 8 )
@@ -1272,31 +1198,16 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble9/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble10" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble10" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -352, -1042 )
-frames = SubResource( 95 )
-frame = 5
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble10"]
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble10/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble11" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble11" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -352, -1302 )
-frames = SubResource( 95 )
-frame = 13
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble11"]
 script = ExtResource( 8 )
@@ -1304,15 +1215,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble11/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble12" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble12" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -352, -1237 )
-frames = SubResource( 95 )
-frame = 10
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble12"]
 script = ExtResource( 8 )
@@ -1320,15 +1224,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble12/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble13" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble13" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -352, -1172 )
-frames = SubResource( 95 )
-frame = 7
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble13"]
 script = ExtResource( 8 )
@@ -1336,15 +1233,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble13/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble14" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble14" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -352, -1107 )
-frames = SubResource( 95 )
-frame = 9
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble14"]
 script = ExtResource( 8 )
@@ -1352,15 +1242,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble14/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble15" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble15" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -352, -1368 )
-frames = SubResource( 95 )
-frame = 8
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble15"]
 script = ExtResource( 8 )
@@ -1368,31 +1251,16 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble15/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble16" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble16" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( -792, -1448 )
-frames = SubResource( 95 )
-frame = 5
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble16"]
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble16/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble17" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble17" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 312, -1680 )
-frames = SubResource( 95 )
-frame = 1
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble17"]
 script = ExtResource( 8 )
@@ -1400,15 +1268,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble17/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble18" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble18" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 312, -1824 )
-frames = SubResource( 95 )
-frame = 10
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble18"]
 script = ExtResource( 8 )
@@ -1416,15 +1277,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble18/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble19" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble19" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 312, -2080 )
-frames = SubResource( 95 )
-frame = 12
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble19"]
 script = ExtResource( 8 )
@@ -1432,15 +1286,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble19/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble20" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble20" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 1744, -1336 )
-frames = SubResource( 95 )
-frame = 4
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble20"]
 script = ExtResource( 8 )
@@ -1448,15 +1295,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble20/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble21" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble21" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2064, -1552 )
-frames = SubResource( 95 )
-frame = 1
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble21"]
 script = ExtResource( 8 )
@@ -1464,15 +1304,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble21/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble22" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble22" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 3376, -944 )
-frames = SubResource( 95 )
-frame = 13
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble22"]
 script = ExtResource( 8 )
@@ -1480,15 +1313,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble22/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble23" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble23" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2064, -1680 )
-frames = SubResource( 95 )
-frame = 7
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble23"]
 script = ExtResource( 8 )
@@ -1496,15 +1322,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble23/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble24" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble24" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2064, -1424 )
-frames = SubResource( 95 )
-frame = 9
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble24"]
 script = ExtResource( 8 )
@@ -1512,31 +1331,16 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble24/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble26" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble26" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 3504, -816 )
-frames = SubResource( 95 )
-frame = 5
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble26"]
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble26/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble27" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble27" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2800, -1520 )
-frames = SubResource( 95 )
-frame = 13
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble27"]
 script = ExtResource( 8 )
@@ -1544,15 +1348,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble27/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble28" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble28" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 3440, -880 )
-frames = SubResource( 95 )
-frame = 7
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble28"]
 script = ExtResource( 8 )
@@ -1560,31 +1357,16 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble28/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble29" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble29" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 3312, -1008 )
-frames = SubResource( 95 )
-frame = 5
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble29"]
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble29/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble30" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble30" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 3248, -1072 )
-frames = SubResource( 95 )
-frame = 10
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble30"]
 script = ExtResource( 8 )
@@ -1592,30 +1374,16 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble30/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble31" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble31" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 3184, -1136 )
-frames = SubResource( 95 )
-frame = 5
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble31"]
 script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble31/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble32" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble32" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2864, -1456 )
-frames = SubResource( 95 )
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble32"]
 script = ExtResource( 8 )
@@ -1623,15 +1391,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble32/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble33" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble33" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2928, -1392 )
-frames = SubResource( 95 )
-frame = 13
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble33"]
 script = ExtResource( 8 )
@@ -1639,15 +1400,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble33/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble34" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble34" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2992, -1328 )
-frames = SubResource( 95 )
-frame = 6
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble34"]
 script = ExtResource( 8 )
@@ -1655,15 +1409,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble34/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble35" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble35" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 3056, -1264 )
-frames = SubResource( 95 )
-frame = 1
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble35"]
 script = ExtResource( 8 )
@@ -1671,15 +1418,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble35/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble36" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble36" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 3120, -1200 )
-frames = SubResource( 95 )
-frame = 9
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble36"]
 script = ExtResource( 8 )
@@ -1687,15 +1427,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble36/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble37" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble37" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2544, -1776 )
-frames = SubResource( 95 )
-frame = 6
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble37"]
 script = ExtResource( 8 )
@@ -1703,15 +1436,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble37/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble38" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble38" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2608, -1712 )
-frames = SubResource( 95 )
-frame = 2
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble38"]
 script = ExtResource( 8 )
@@ -1719,14 +1445,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble38/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble39" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble39" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2672, -1648 )
-frames = SubResource( 95 )
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble39"]
 script = ExtResource( 8 )
@@ -1734,15 +1454,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble39/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble40" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble40" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2736, -1584 )
-frames = SubResource( 95 )
-frame = 7
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble40"]
 script = ExtResource( 8 )
@@ -1750,14 +1463,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble40/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble41" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble41" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2416, -1904 )
-frames = SubResource( 95 )
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble41"]
 script = ExtResource( 8 )
@@ -1765,15 +1472,8 @@ script = ExtResource( 8 )
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble41/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble42" type="AnimatedSprite" parent="bubbles"]
+[node name="JumpBubble42" parent="bubbles" instance=ExtResource( 13 )]
 position = Vector2( 2480, -1840 )
-frames = SubResource( 95 )
-frame = 3
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble42"]
 script = ExtResource( 8 )
@@ -1938,10 +1638,3 @@ __meta__ = {
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="boxes/box14/StaticBody2D"]
 shape = SubResource( 97 )
-
-[node name="Player" parent="." instance=ExtResource( 12 )]
-position = Vector2( 48, 136 )
-
-[node name="Camera2D" type="Camera2D" parent="Player"]
-current = true
-zoom = Vector2( 0.5, 0.5 )

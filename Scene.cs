@@ -4,6 +4,8 @@ using Godot;
 
 public class Scene : Node2D {
 	const float TICK_RATE = 1.0f / 15;
+	// @Todo(sushi): make this load in from a file instead?
+	const string LOBBY_KEY = "lole";
 
 	[Export]
 	public PackedScene playerScene;
@@ -41,7 +43,7 @@ public class Scene : Node2D {
 		myPlayer.Position = startPos;
 		myPlayer.InitLocal();
 
-		Buffer.BlockCopy("lole".ToUTF8(), 0, sendBuffer, 0, 4);
+		Buffer.BlockCopy(LOBBY_KEY.ToUTF8(), 0, sendBuffer, 0, 4);
 
 		id.Value = GD.Randi();
 		sendBuffer[4] = id.B0;
@@ -96,6 +98,10 @@ public class Scene : Node2D {
 		// @Fix(sushi): handle concatenated packets. either use specified packet sizes to split,
 		//  or start using packet ids so we can expand the demo later with special interactions
 		byte[] data = peer.GetPacket();
+		if (data.Length == 0 || data.Length % 21 != 0) {
+			return;
+		}
+
 		id.B0 = data[0];
 		id.B1 = data[1];
 		id.B2 = data[2];
