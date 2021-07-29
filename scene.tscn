@@ -1,17 +1,17 @@
 [gd_scene load_steps=111 format=2]
 
-[ext_resource path="res://assets/14-TileSets/Decorations (32x32).png" type="Texture" id=1]
-[ext_resource path="res://assets/14-TileSets/Terrain (32x32).png" type="Texture" id=2]
-[ext_resource path="res://assets/14-TileSets/spikes.png" type="Texture" id=3]
-[ext_resource path="res://assets/08-Box/Idle.png" type="Texture" id=4]
-[ext_resource path="res://assets/squishy.png" type="Texture" id=5]
-[ext_resource path="res://Player.tscn" type="PackedScene" id=6]
-[ext_resource path="res://Area2D.cs" type="Script" id=7]
-[ext_resource path="res://assets/11-Door/Idle.png" type="Texture" id=8]
+[ext_resource path="res://assets/08-Box/Idle.png" type="Texture" id=1]
+[ext_resource path="res://assets/14-TileSets/spikes.png" type="Texture" id=2]
+[ext_resource path="res://assets/squishy.png" type="Texture" id=3]
+[ext_resource path="res://assets/14-TileSets/Decorations (32x32).png" type="Texture" id=4]
+[ext_resource path="res://assets/14-TileSets/Terrain (32x32).png" type="Texture" id=5]
+[ext_resource path="res://Scene.cs" type="Script" id=6]
+[ext_resource path="res://AngledBoxes.cs" type="Script" id=7]
+[ext_resource path="res://Area2D.cs" type="Script" id=8]
 [ext_resource path="res://Spikes.cs" type="Script" id=9]
 [ext_resource path="res://assets/08-Box/Angled Boxes.png" type="Texture" id=10]
-[ext_resource path="res://AngledBoxes.cs" type="Script" id=11]
-[ext_resource path="res://Scene.cs" type="Script" id=12]
+[ext_resource path="res://assets/11-Door/Idle.png" type="Texture" id=11]
+[ext_resource path="res://Player.tscn" type="PackedScene" id=12]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -153,7 +153,7 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 
 [sub_resource type="TileSet" id=47]
 0/name = "Terrain (32x32).png 0"
-0/texture = ExtResource( 2 )
+0/texture = ExtResource( 5 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 32, 32, 544, 160 )
@@ -453,7 +453,7 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 } ]
 0/z_index = 0
 1/name = "Terrain (32x32).png 1"
-1/texture = ExtResource( 2 )
+1/texture = ExtResource( 5 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 32, 224, 544, 160 )
@@ -478,7 +478,7 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 
 [sub_resource type="TileSet" id=48]
 0/name = "Decorations (32x32).png 0"
-0/texture = ExtResource( 1 )
+0/texture = ExtResource( 4 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 64, 96, 64, 64 )
@@ -499,7 +499,7 @@ points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
 0/shapes = [  ]
 0/z_index = 0
 1/name = "Decorations (32x32).png 1"
-1/texture = ExtResource( 1 )
+1/texture = ExtResource( 4 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 128, 96, 64, 64 )
@@ -620,7 +620,7 @@ points = PoolVector2Array( 0, 32, 0, 0, 32, 0 )
 
 [sub_resource type="TileSet" id=54]
 4/name = "Decorations (32x32).png 4"
-4/texture = ExtResource( 1 )
+4/texture = ExtResource( 4 )
 4/tex_offset = Vector2( 0, 0 )
 4/modulate = Color( 1, 1, 1, 1 )
 4/region = Rect2( 32, 32, 32, 128 )
@@ -693,7 +693,7 @@ points = PoolVector2Array( 0, 0, 0, 8, 28, 8, 30, 0 )
 
 [sub_resource type="TileSet" id=71]
 0/name = "spikes.png 0"
-0/texture = ExtResource( 3 )
+0/texture = ExtResource( 2 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 0, 0, 32, 128 )
@@ -741,7 +741,7 @@ points = PoolVector2Array( 0, 0, 0, 8, 28, 8, 30, 0 )
 } ]
 0/z_index = 0
 1/name = "spikes.png 1"
-1/texture = ExtResource( 3 )
+1/texture = ExtResource( 2 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 32, 0, 32, 128 )
@@ -789,7 +789,7 @@ points = PoolVector2Array( 0, 0, 0, 8, 28, 8, 30, 0 )
 } ]
 1/z_index = 0
 2/name = "spikes.png 2"
-2/texture = ExtResource( 3 )
+2/texture = ExtResource( 2 )
 2/tex_offset = Vector2( 0, 0 )
 2/modulate = Color( 1, 1, 1, 1 )
 2/region = Rect2( 64, 0, 128, 32 )
@@ -837,7 +837,7 @@ points = PoolVector2Array( 0, 0, 0, 8, 28, 8, 30, 0 )
 } ]
 2/z_index = 0
 3/name = "spikes.png 3"
-3/texture = ExtResource( 3 )
+3/texture = ExtResource( 2 )
 3/tex_offset = Vector2( 0, 0 )
 3/modulate = Color( 1, 1, 1, 1 )
 3/region = Rect2( 64, 32, 128, 32 )
@@ -911,7 +911,7 @@ points = PoolVector2Array( 32, 12, 0, 12, 0, 0, 32, 0 )
 
 [sub_resource type="TileSet" id=80]
 0/name = "Decorations (32x32).png 0"
-0/texture = ExtResource( 1 )
+0/texture = ExtResource( 4 )
 0/tex_offset = Vector2( 0, 0 )
 0/modulate = Color( 1, 1, 1, 1 )
 0/region = Rect2( 64, 32, 128, 32 )
@@ -959,7 +959,7 @@ points = PoolVector2Array( 32, 12, 0, 12, 0, 0, 32, 0 )
 } ]
 0/z_index = 0
 1/name = "Decorations (32x32).png 1"
-1/texture = ExtResource( 1 )
+1/texture = ExtResource( 4 )
 1/tex_offset = Vector2( 0, 0 )
 1/modulate = Color( 1, 1, 1, 1 )
 1/region = Rect2( 64, 64, 128, 32 )
@@ -1008,59 +1008,59 @@ points = PoolVector2Array( 32, 12, 0, 12, 0, 0, 32, 0 )
 1/z_index = 0
 
 [sub_resource type="AtlasTexture" id=81]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=82]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 40, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=83]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 80, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=84]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 120, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=85]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 160, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=86]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 200, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=87]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 240, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=88]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 280, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=89]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 320, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=90]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 360, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=91]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 400, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=92]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 440, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=93]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 480, 0, 40, 30 )
 
 [sub_resource type="AtlasTexture" id=94]
-atlas = ExtResource( 5 )
+atlas = ExtResource( 3 )
 region = Rect2( 520, 0, 40, 30 )
 
 [sub_resource type="SpriteFrames" id=95]
@@ -1100,8 +1100,8 @@ public class Camera2D : Godot.Camera2D
 }
 "
 
-[node name="scene" type="Node2D"]
-script = ExtResource( 12 )
+[node name="Scene" type="Node2D"]
+script = ExtResource( 6 )
 
 [node name="background" type="TileMap" parent="."]
 tile_set = SubResource( 47 )
@@ -1117,14 +1117,14 @@ tile_data = PoolIntArray( -4063238, 1, 0, -4063233, 0, 0, -3801094, 0, 0, -35389
 
 [node name="Idle" type="Sprite" parent="."]
 position = Vector2( 48, 160 )
-texture = ExtResource( 8 )
+texture = ExtResource( 11 )
 
 [node name="angled boxes" type="TileMap" parent="."]
 tile_set = SubResource( 53 )
 cell_size = Vector2( 32, 32 )
 format = 1
 tile_data = PoolIntArray( -3407884, 2, 0, -3342347, 2, 0, -3407862, 0, 0, -3407858, 0, 0, -3276810, 2, 0, -3342327, 0, 0, -3342323, 0, 0, -3211277, 1, 0, -3211273, 2, 0, -3276792, 0, 0, -3276788, 0, 0, -3145740, 1, 0, -3211257, 0, 0, -3211253, 0, 0, -3080203, 1, 0, -3145722, 0, 0, -3145718, 0, 0, -3014666, 1, 0, -3014660, 0, 0, -3080187, 0, 0, -3080183, 0, 0, -2949129, 1, 0, -2949125, 0, 0, -3014652, 0, 0, -3014648, 0, 0, -2949117, 0, 0, -2949113, 0, 0, -2424823, 3, 0, -2359288, 3, 0, -2293755, 3, 0, -2228220, 3, 0, -2162687, 3, 0, -2031630, 2, 0, -2031629, 3, 0, -2097152, 3, 0, -2097131, 0, 0, -1966083, 3, 0, -1900548, 3, 0, -1966060, 0, 0, -1835022, 0, 0, -1835015, 3, 0, -1769480, 3, 0, -1834989, 0, 0, -1703947, 3, 0, -1638412, 3, 0, -1703918, 0, 0, -1638394, 0, 0, -1638393, 1, 0, -1507340, 1, 0, -1572859, 0, 0, -1572856, 1, 0, -1441803, 1, 0, -1507324, 0, 0, -1507319, 1, 0, -1376266, 1, 0, -1441789, 0, 0, -1441782, 1, 0, -1310729, 1, 0, -1376254, 0, 0, -1376245, 1, 0, -1245192, 1, 0, -1310719, 0, 0, -1310708, 1, 0, -1179655, 1, 0, -1245184, 0, 0, -1245171, 1, 0, -1114118, 1, 0, -1114113, 0, 0, -1179634, 1, 0, -1048581, 1, 0, -1114097, 1, 0, -983044, 1, 0, -1048560, 1, 0, -917507, 1, 0, -851970, 1, 0, -786433, 1, 0, -786432, 1, 0 )
-script = ExtResource( 11 )
+script = ExtResource( 7 )
 
 [node name="banners" type="TileMap" parent="."]
 tile_set = SubResource( 54 )
@@ -1150,86 +1150,6 @@ tile_data = PoolIntArray( -4390905, 0, 0, -4390904, 0, 1, -4390903, 0, 1, -43909
 [node name="jumpbubble" type="AnimatedSprite" parent="bubbles"]
 position = Vector2( 688, 48 )
 frames = SubResource( 95 )
-frame = 2
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble2" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 640, -464 )
-frames = SubResource( 95 )
-frame = 12
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble2"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble2/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble3" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 8, -976 )
-frames = SubResource( 95 )
-frame = 10
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble3"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble3/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble4" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 136, -1040 )
-frames = SubResource( 95 )
-frame = 9
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble4"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble4/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble5" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 264, -1104 )
-frames = SubResource( 95 )
-frame = 3
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble5"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble5/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble6" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 504, -800 )
-frames = SubResource( 95 )
 frame = 6
 speed_scale = 2.0
 playing = true
@@ -1237,14 +1157,45 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble6"]
-script = ExtResource( 7 )
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble"]
+script = ExtResource( 8 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble6/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble7" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -120, -912 )
+[node name="jumpbubble2" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 640, -464 )
+frames = SubResource( 95 )
+frame = 2
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble2"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble2/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble3" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 8, -976 )
+frames = SubResource( 95 )
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble3"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble3/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble4" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 136, -1040 )
 frames = SubResource( 95 )
 frame = 13
 speed_scale = 2.0
@@ -1253,94 +1204,14 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble7"]
-script = ExtResource( 7 )
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble4"]
+script = ExtResource( 8 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble7/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble4/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble8" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -248, -848 )
-frames = SubResource( 95 )
-frame = 9
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble8"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble8/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble9" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 312, -1952 )
-frames = SubResource( 95 )
-frame = 13
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble9"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble9/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble10" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -352, -1042 )
-frames = SubResource( 95 )
-frame = 5
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble10"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble10/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble11" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -352, -1302 )
-frames = SubResource( 95 )
-frame = 13
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble11"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble11/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble12" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -352, -1237 )
-frames = SubResource( 95 )
-frame = 10
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble12"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble12/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble13" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -352, -1172 )
+[node name="jumpbubble5" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 264, -1104 )
 frames = SubResource( 95 )
 frame = 7
 speed_scale = 2.0
@@ -1349,78 +1220,14 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble13"]
-script = ExtResource( 7 )
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble5"]
+script = ExtResource( 8 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble13/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble5/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble14" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -352, -1107 )
-frames = SubResource( 95 )
-frame = 9
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble14"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble14/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble15" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -352, -1368 )
-frames = SubResource( 95 )
-frame = 8
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble15"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble15/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble16" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( -792, -1448 )
-frames = SubResource( 95 )
-frame = 5
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble16"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble16/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble17" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 312, -1680 )
-frames = SubResource( 95 )
-frame = 1
-speed_scale = 2.0
-playing = true
-__meta__ = {
-"_edit_group_": true
-}
-
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble17"]
-script = ExtResource( 7 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble17/Area2D"]
-shape = SubResource( 96 )
-
-[node name="jumpbubble18" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 312, -1824 )
+[node name="jumpbubble6" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 504, -800 )
 frames = SubResource( 95 )
 frame = 10
 speed_scale = 2.0
@@ -1429,14 +1236,141 @@ __meta__ = {
 "_edit_group_": true
 }
 
-[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble18"]
-script = ExtResource( 7 )
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble6"]
+script = ExtResource( 8 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble18/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble6/Area2D"]
 shape = SubResource( 96 )
 
-[node name="jumpbubble19" type="AnimatedSprite" parent="bubbles"]
-position = Vector2( 312, -2080 )
+[node name="jumpbubble7" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -120, -912 )
+frames = SubResource( 95 )
+frame = 3
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble7"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble7/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble8" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -248, -848 )
+frames = SubResource( 95 )
+frame = 13
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble8"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble8/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble9" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 312, -1952 )
+frames = SubResource( 95 )
+frame = 3
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble9"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble9/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble10" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -352, -1042 )
+frames = SubResource( 95 )
+frame = 9
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble10"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble10/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble11" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -352, -1302 )
+frames = SubResource( 95 )
+frame = 3
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble11"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble11/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble12" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -352, -1237 )
+frames = SubResource( 95 )
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble12"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble12/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble13" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -352, -1172 )
+frames = SubResource( 95 )
+frame = 11
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble13"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble13/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble14" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -352, -1107 )
+frames = SubResource( 95 )
+frame = 13
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble14"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble14/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble15" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -352, -1368 )
 frames = SubResource( 95 )
 frame = 12
 speed_scale = 2.0
@@ -1445,8 +1379,71 @@ __meta__ = {
 "_edit_group_": true
 }
 
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble15"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble15/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble16" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( -792, -1448 )
+frames = SubResource( 95 )
+frame = 9
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble16"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble16/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble17" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 312, -1680 )
+frames = SubResource( 95 )
+frame = 5
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble17"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble17/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble18" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 312, -1824 )
+frames = SubResource( 95 )
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Area2D" type="Area2D" parent="bubbles/jumpbubble18"]
+script = ExtResource( 8 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble18/Area2D"]
+shape = SubResource( 96 )
+
+[node name="jumpbubble19" type="AnimatedSprite" parent="bubbles"]
+position = Vector2( 312, -2080 )
+frames = SubResource( 95 )
+frame = 2
+speed_scale = 2.0
+playing = true
+__meta__ = {
+"_edit_group_": true
+}
+
 [node name="Area2D" type="Area2D" parent="bubbles/jumpbubble19"]
-script = ExtResource( 7 )
+script = ExtResource( 8 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="bubbles/jumpbubble19/Area2D"]
 shape = SubResource( 96 )
@@ -1455,7 +1452,7 @@ shape = SubResource( 96 )
 
 [node name="box" type="Sprite" parent="boxes"]
 position = Vector2( 918, 24 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1467,7 +1464,7 @@ shape = SubResource( 97 )
 
 [node name="box2" type="Sprite" parent="boxes"]
 position = Vector2( 912, 8 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1479,7 +1476,7 @@ shape = SubResource( 97 )
 
 [node name="box3" type="Sprite" parent="boxes"]
 position = Vector2( 897, 24 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1491,7 +1488,7 @@ shape = SubResource( 97 )
 
 [node name="box4" type="Sprite" parent="boxes"]
 position = Vector2( -330, -936 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1503,7 +1500,7 @@ shape = SubResource( 97 )
 
 [node name="box6" type="Sprite" parent="boxes"]
 position = Vector2( -351, -936 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1515,7 +1512,7 @@ shape = SubResource( 97 )
 
 [node name="box7" type="Sprite" parent="boxes"]
 position = Vector2( -336, -952 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1527,7 +1524,7 @@ shape = SubResource( 97 )
 
 [node name="box8" type="Sprite" parent="boxes"]
 position = Vector2( -372, -936 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1539,7 +1536,7 @@ shape = SubResource( 97 )
 
 [node name="box9" type="Sprite" parent="boxes"]
 position = Vector2( -357, -952 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1551,7 +1548,7 @@ shape = SubResource( 97 )
 
 [node name="box10" type="Sprite" parent="boxes"]
 position = Vector2( -344, -968 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1563,7 +1560,7 @@ shape = SubResource( 97 )
 
 [node name="box11" type="Sprite" parent="boxes"]
 position = Vector2( -245, -1416 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1575,7 +1572,7 @@ shape = SubResource( 97 )
 
 [node name="box12" type="Sprite" parent="boxes"]
 position = Vector2( -224, -1416 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1587,7 +1584,7 @@ shape = SubResource( 97 )
 
 [node name="box13" type="Sprite" parent="boxes"]
 position = Vector2( -203, -1416 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1599,7 +1596,7 @@ shape = SubResource( 97 )
 
 [node name="box14" type="Sprite" parent="boxes"]
 position = Vector2( 235, -2024 )
-texture = ExtResource( 4 )
+texture = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
@@ -1609,7 +1606,7 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="boxes/box14/StaticBody2D"]
 shape = SubResource( 97 )
 
-[node name="Player" parent="." instance=ExtResource( 6 )]
+[node name="Player" parent="." instance=ExtResource( 12 )]
 position = Vector2( 416, -2216 )
 
 [node name="Camera2D" type="Camera2D" parent="Player"]

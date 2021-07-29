@@ -10,11 +10,11 @@ public class Area2D : Godot.Area2D {
 		// milliseconds
 		delta *= 1000;
 		
-		if (!HasNode("/root/scene/Player")) {
+		if (!HasNode("/root/Scene/Player")) {
 			return;
 		}
 		
-		Player player = GetNode<Player>("/root/scene/Player");
+		Player player = GetNode<Player>("/root/Scene/Player");
 		if (remainingPoppedTime == 0) {
 			if (OverlapsBody(player)) {
 				remainingPoppedTime = POP_COOLDOWN;
