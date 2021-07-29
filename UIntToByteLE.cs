@@ -1,9 +1,9 @@
 using System.Runtime.InteropServices;
 
 [StructLayout(LayoutKind.Explicit)]
-public struct IntToByteLE {
+public struct UIntToByteLE {
     [FieldOffset(0)]
-    public int Value;
+    public uint Value;
 
     [FieldOffset(0)]
     public byte B0;

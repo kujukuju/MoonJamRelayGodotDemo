@@ -1,20 +1,30 @@
 using System;
+using System.Collections.Generic;
 using Godot;
 
 public class Scene : Node2D
 {
 	const float TICK_RATE = 1.0f / 15;
 
+	[Export]
+	public PackedScene playerScene;
+
 	WebSocketClient socket = new WebSocketClient();
 	WebSocketPeer peer;
 	// buffer for the send packet
 	//  4 : room/game id
 	//  4 : player id int
+	//  1 : player flags
 	//  16: 4*float for pos/vel
-	byte[] sendBuffer = new byte[4 + sizeof(int) + (4 * sizeof(float))];
-	IntToByteLE id = new IntToByteLE();
-	float[] playerMovementData = new float[4];
+	byte[] sendBuffer = new byte[4 + sizeof(int) + 1 + (4 * sizeof(float))];
+	UIntToByteLE id = new UIntToByteLE();
+	float[] movementBuffer = new float[4];
 	float accumulator;
+
+	Vector2 startPos;
+
+	Dictionary<uint, Player> players = new Dictionary<uint, Player>();
+	Player myPlayer;
 
 	public override void _Ready()
 	{
@@ -23,10 +33,19 @@ public class Scene : Node2D
 		socket.Connect("connection_error", this, nameof(Error));
 		socket.Connect("data_received", this, nameof(Data));
 		socket.Connect("server_close_request", this, nameof(CloseRequest));
+		GD.Seed(OS.GetUnixTime());
+
+		Position2D start = GetNode("Start") as Position2D;
+		startPos = start.Position;
+
+		myPlayer = playerScene.Instance() as Player;
+		AddChild(myPlayer);
+		myPlayer.Position = startPos;
+		myPlayer.InitLocal();
 
 		Buffer.BlockCopy("lole".ToUTF8(), 0, sendBuffer, 0, 4);
 
-		id.Value = 69;
+		id.Value = GD.Randi();
 		sendBuffer[4] = id.B0;
 		sendBuffer[5] = id.B1;
 		sendBuffer[6] = id.B2;
@@ -50,12 +69,12 @@ public class Scene : Node2D
 		if (accumulator < TICK_RATE)
 			return;
 		accumulator = 0.0f;
-		Player player = GetTree().GetNodesInGroup("players")[0] as Player;
-		playerMovementData[0] = player.Position.x;
-		playerMovementData[1] = player.Position.y;
-		playerMovementData[2] = player.velocity.x;
-		playerMovementData[3] = player.velocity.y;
-		Buffer.BlockCopy(playerMovementData, 0, sendBuffer, 8, playerMovementData.Length * sizeof(float));
+		movementBuffer[0] = myPlayer.Position.x;
+		movementBuffer[1] = myPlayer.Position.y;
+		movementBuffer[2] = myPlayer.velocity.x;
+		movementBuffer[3] = myPlayer.velocity.y;
+		sendBuffer[8] = myPlayer.RemoteState;
+		Buffer.BlockCopy(movementBuffer, 0, sendBuffer, 9, movementBuffer.Length * sizeof(float));
 		peer.PutPacket(sendBuffer);
 	}
 
@@ -76,17 +95,29 @@ public class Scene : Node2D
 	public void Data() {
 		GD.Print("Data...");
 
+		// @Fix(sushi): handle concatenated packets. either use specified packet sizes to split,
+		//  or start using packet ids so we can expand the demo later with special interactions
 		byte[] data = peer.GetPacket();
 		id.B0 = data[0];
 		id.B1 = data[1];
 		id.B2 = data[2];
 		id.B3 = data[3];
-		Buffer.BlockCopy(data, 4, playerMovementData, 0, data.Length - 4);
 
-		GD.Print(id.Value);
-		for(int i = 0; i < playerMovementData.Length; i++) {
-			GD.Print(playerMovementData[i]);
+		// copy the movement floats into the buffer, ignoring the id/state bytes
+		Buffer.BlockCopy(data, 5, movementBuffer, 0, data.Length - 5);
+
+		Player player;
+		if (!players.ContainsKey(id.Value)) {
+			player = playerScene.Instance() as Player;
+			players[id.Value] = player;
+			AddChild(player);
+		} else {
+			player = players[id.Value];
 		}
+		player.RemoteState = data[4];
+		player.timeSinceLastUpdate = 0.0f;
+		player.Position = new Vector2(movementBuffer[0], movementBuffer[1]);
+		player.velocity = new Vector2(movementBuffer[2], movementBuffer[3]);
 	}
 
 	public void CloseRequest(int code, String reason) {
