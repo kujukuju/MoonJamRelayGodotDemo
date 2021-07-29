@@ -4,7 +4,7 @@ using System;
 public class Player : KinematicBody2D {
 	public const float MAX_VELOCITY = 200;
 	public const float FORCED_DEAD_TIME = 400;
-	
+
 	const float EPSILON = 0.000001f;
 	const float ACCEL = 2.5f;
 	const float AIR_ACCEL = 2.5f;
@@ -13,7 +13,7 @@ public class Player : KinematicBody2D {
 	const float JUMP_INSTANT_VELOCITY = 240;
 	const float JUMP_HOLD_ACCEL = 1.0f;
 	const float POP_TIME = 1000;
-	
+
 	public Vector2 velocity = new Vector2(0, 0);
 	public bool jumping = false;
 	public bool falling = false;
@@ -22,7 +22,11 @@ public class Player : KinematicBody2D {
 	public float remainingResurrectTime = 0;
 	public bool dead = false;
 	public bool killable = true;
-	
+
+	public override void _Ready() {
+		AddToGroup("players");
+	}
+
 	public void Pop() {
 		remainingPoppedTime = POP_TIME;
 		velocity[0] /= 10;
