@@ -54,7 +54,7 @@ public class Scene : Node2D {
 
 		Godot.Error attempt = socket.ConnectToUrl("ws://127.0.0.1:58008");
 		if (attempt == Godot.Error.Ok) {
-			GD.Print("Websocket connected. " + attempt + " " + Name);
+			GD.Print("Websocket connected. " + attempt);
 		} else {
 			GD.Print("Websocket failed to connect. " + attempt);
 		}
