@@ -4,8 +4,8 @@ using Godot;
 
 public class Scene : Node2D {
 	const float TICK_RATE = 1.0f / 15;
-	// @Todo(sushi): make this load in from a file instead?
-	const string LOBBY_KEY = "lole";
+	const string LOBBY_KEY = "moon";
+	// const string LOBBY_KEY = "lole";
 	const int PACKET_SIZE = sizeof(int) + 1 + (4 * sizeof(float));
 
 	[Export]
@@ -121,14 +121,7 @@ public class Scene : Node2D {
 			player.timeSinceLastUpdate = 0.0f;
 
 			// player position smoothing so it doesn't instantly snap
-			Vector2 remotePosition = new Vector2(movementBuffer[0], movementBuffer[1]);
-			Vector2 difference = remotePosition - player.Position;
-			float distance = difference.Length();
-			if (distance > 30.0f) {
-				player.Position = remotePosition;
-			} else if (distance > 2.0f) {
-				player.Position += difference * 0.1f;
-			}
+			player.Position = new Vector2(movementBuffer[0], movementBuffer[1]);
 			player.velocity = new Vector2(movementBuffer[2], movementBuffer[3]);
 		}
 	}
