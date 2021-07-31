@@ -4,8 +4,9 @@ using Godot;
 
 public class Scene : Node2D {
 	const float TICK_RATE = 1.0f / 15;
-	const string LOBBY_KEY = "moon";
-	// const string LOBBY_KEY = "lole";
+	const uint MOON_ID = 69;
+	const string MOON_KEY_FILE = "moon.txt";
+	const string PLEB_KEY_FILE = "pleb.txt";
 	const int PACKET_SIZE = sizeof(int) + 1 + (4 * sizeof(float));
 
 	[Export]
@@ -36,17 +37,22 @@ public class Scene : Node2D {
 		socket.Connect("server_close_request", this, nameof(CloseRequest));
 		GD.Seed(OS.GetUnixTime());
 
-		Position2D start = GetNode("Start") as Position2D;
-		startPos = start.Position;
+		string key = LoadKey(MOON_KEY_FILE);
+		id.Value = MOON_ID;
+		if (key == null) {
+			key = LoadKey(PLEB_KEY_FILE);
+			while (id.Value == 69) {
+				id.Value = GD.Randi();
+			}
+		}
+		if (key == null) {
+			GD.Print("No key files found.");
+			key = "????"; // key files were missing
+		}
 
-		myPlayer = playerScene.Instance() as Player;
-		AddChild(myPlayer);
-		myPlayer.Position = startPos;
-		myPlayer.InitLocal();
-
-		Buffer.BlockCopy(LOBBY_KEY.ToUTF8(), 0, sendBuffer, 0, 4);
-
-		id.Value = GD.Randi();
+		// set the first 4 bytes of the buffer to the lobby key
+		Buffer.BlockCopy(key.ToUTF8(), 0, sendBuffer, 0, 4);
+		// set the next 4 bytes of the buffer to the current player's id
 		sendBuffer[4] = id.B0;
 		sendBuffer[5] = id.B1;
 		sendBuffer[6] = id.B2;
@@ -57,6 +63,25 @@ public class Scene : Node2D {
 			GD.Print("Websocket connected. " + attempt);
 		} else {
 			GD.Print("Websocket failed to connect. " + attempt);
+		}
+
+		Position2D start = GetNode("Start") as Position2D;
+		startPos = start.Position;
+
+		myPlayer = playerScene.Instance() as Player;
+		AddChild(myPlayer);
+		myPlayer.Position = startPos;
+		myPlayer.Init(id.Value == MOON_ID);
+		myPlayer.InitLocal();
+	}
+
+	private string LoadKey(string keyFile)
+	{
+		using(File file = new File()) {
+			if (!file.FileExists(keyFile))
+				return null;
+			file.Open(keyFile, File.ModeFlags.Read);
+			return file.GetLine().StripEdges();
 		}
 	}
 
@@ -114,6 +139,7 @@ public class Scene : Node2D {
 				player = playerScene.Instance() as Player;
 				players[id.Value] = player;
 				AddChild(player);
+				player.Init(id.Value == MOON_ID);
 			} else {
 				player = players[id.Value];
 			}

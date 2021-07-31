@@ -55,6 +55,16 @@ public class Player : KinematicBody2D {
 		process = RemoteProcess;
 	}
 
+	public void Init(bool isKing) {
+		AnimatedSprite sprite;
+		if (isKing) {
+			sprite = GetNode("AnimatedPleb") as AnimatedSprite;
+		} else {
+			sprite = GetNode("AnimatedKing") as AnimatedSprite;
+		}
+		sprite.QueueFree();
+	}
+
 	public void InitLocal() {
 		AddToGroup("local_player");
 		process = LocalProcess;
