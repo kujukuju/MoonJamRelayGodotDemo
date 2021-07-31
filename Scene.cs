@@ -102,6 +102,7 @@ public class Scene : Node2D {
 		sendBuffer[8] = myPlayer.RemoteState;
 		Buffer.BlockCopy(movementBuffer, 0, sendBuffer, 9, movementBuffer.Length * sizeof(float));
 		peer.PutPacket(sendBuffer);
+		myPlayer.justDied = false;
 	}
 
 	public void Connected(string protocol) {
@@ -142,6 +143,9 @@ public class Scene : Node2D {
 				player.Init(id.Value == MOON_ID);
 			} else {
 				player = players[id.Value];
+			}
+			if (!IsInstanceValid(player)) {
+				return;
 			}
 			player.RemoteState = data[offset + 4];
 			player.timeSinceLastUpdate = 0.0f;

@@ -22,6 +22,7 @@ public class Player : KinematicBody2D {
 	public float remainingResurrectTime = 0;
 	public bool dead = false;
 	public bool killable = true;
+	public bool justDied = false;
 
 	public float timeSinceLastUpdate = 0.0f;
 
@@ -40,13 +41,25 @@ public class Player : KinematicBody2D {
 				state += 1 << 2;
 			if (killable)
 				state += 1 << 3;
+			if (justDied)
+				state += 1 << 4;
 			return state;
 		}
 		set {
+			bool lastDead = dead;
 			jumping  = (value & (1 << 0)) != 0;
 			falling  = (value & (1 << 1)) != 0;
 			dead     = (value & (1 << 2)) != 0;
 			killable = (value & (1 << 3)) != 0;
+			justDied = (value & (1 << 4)) != 0;
+			// @Note(sushi): if the remote player just died, set the timer so the animation plays
+			if (justDied || (!lastDead && dead)) {
+				remainingForcedDeadTime = FORCED_DEAD_TIME;
+				remainingResurrectTime = FORCED_DEAD_TIME;
+			} else if (!dead) {
+				remainingForcedDeadTime = 0;
+				remainingResurrectTime = 0;
+			}
 		}
 	}
 
@@ -102,6 +115,7 @@ public class Player : KinematicBody2D {
 				KinematicCollision2D collisions = GetSlideCollision(i);
 				if (collisions.Collider.HasMeta("spikes")) {
 					dead = true;
+					justDied = true;
 					killable = false;
 					remainingForcedDeadTime = FORCED_DEAD_TIME;
 					remainingResurrectTime = FORCED_DEAD_TIME;
@@ -237,10 +251,18 @@ public class Player : KinematicBody2D {
 	}
 
 	public void RemoteProcess(float delta) {
+		delta *= 1000;
+
 		timeSinceLastUpdate += delta;
-		if (timeSinceLastUpdate > 4.0f) {
+		if (timeSinceLastUpdate > 4000) {
 			QueueFree();
 			return;
+		}
+		if (dead) {
+			remainingForcedDeadTime = Math.Max(remainingForcedDeadTime - delta, 0);
+			if (remainingForcedDeadTime == 0 && velocity.Length() < EPSILON && remainingResurrectTime > 0) {
+				remainingResurrectTime = Math.Max(remainingResurrectTime - delta, 0);
+			}
 		}
 		velocity = MoveAndSlide(velocity, new Vector2(0, -1), false, 4, (float) Math.PI / 16, true);
 	}

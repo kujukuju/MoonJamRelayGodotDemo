@@ -5,13 +5,16 @@ public class AnimatedPlayer : AnimatedSprite {
 	const float EPSILON = 0.000001f;
 	const float MS_PER_FRAME = 100;
 	
+	Player player;
 	float deltaTime = 0;
+
+	public override void _Ready() {
+		player = GetParent() as Player;
+	}
 
 	public override void _Process(float delta) {
 		// milliseconds
 		delta *= 1000;
-		
-		Player player = (Player) GetParent();
 		
 		Vector2 velocity = player.velocity;
 		if (velocity[0] < -EPSILON) {
