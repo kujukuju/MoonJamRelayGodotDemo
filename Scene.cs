@@ -37,17 +37,22 @@ public class Scene : Node2D {
 		socket.Connect("server_close_request", this, nameof(CloseRequest));
 		GD.Seed(OS.GetUnixTime());
 
+		// try loading moon's lobby key first
 		string key = LoadKey(MOON_KEY_FILE);
 		id.Value = MOON_ID;
+
+		// if we don't find it, then join as a pleb
 		if (key == null) {
 			key = LoadKey(PLEB_KEY_FILE);
 			while (id.Value == 69) {
 				id.Value = GD.Randi();
 			}
 		}
+		// key files were missing, the game will run but the player will be alone
+		// @Note(sushi): probably add a warning for this?
 		if (key == null) {
 			GD.Print("No key files found.");
-			key = "????"; // key files were missing
+			key = "????";
 		}
 
 		// set the first 4 bytes of the buffer to the lobby key
@@ -95,11 +100,13 @@ public class Scene : Node2D {
 		if (accumulator < TICK_RATE)
 			return;
 		accumulator = 0.0f;
+		// populate the movementBuffer with our current pos/vel
 		movementBuffer[0] = myPlayer.Position.x;
 		movementBuffer[1] = myPlayer.Position.y;
 		movementBuffer[2] = myPlayer.velocity.x;
 		movementBuffer[3] = myPlayer.velocity.y;
 		sendBuffer[8] = myPlayer.RemoteState;
+		// copy the movementBuffer bytes to the sendBuffer and push it
 		Buffer.BlockCopy(movementBuffer, 0, sendBuffer, 9, movementBuffer.Length * sizeof(float));
 		peer.PutPacket(sendBuffer);
 		myPlayer.justDied = false;
@@ -122,19 +129,19 @@ public class Scene : Node2D {
 	public void Data() {
 		// @Todo(sushi): start using a packet processor so we can expand the demo later with special interactions
 		byte[] data = peer.GetPacket();
+		// @Note(sushi): this breaks if somebody starts sending packets that aren't the expected size
 		if (data.Length == 0 || data.Length % PACKET_SIZE != 0) {
 			return;
 		}
 
 		for (int offset = 0; offset < data.Length; offset += PACKET_SIZE) {
+			// read in the remote player's id
 			id.B0 = data[offset + 0];
 			id.B1 = data[offset + 1];
 			id.B2 = data[offset + 2];
 			id.B3 = data[offset + 3];
 
-			// copy the movement floats into the buffer, ignoring the id/state bytes
-			Buffer.BlockCopy(data, offset + 5, movementBuffer, 0, movementBuffer.Length * 4);
-
+			// check if the player exists, otherwise instance a new one
 			Player player;
 			if (!players.ContainsKey(id.Value)) {
 				player = playerScene.Instance() as Player;
@@ -147,6 +154,11 @@ public class Scene : Node2D {
 			if (!IsInstanceValid(player)) {
 				return;
 			}
+
+			// copy the movement floats into the buffer, ignoring the id/state bytes
+			Buffer.BlockCopy(data, offset + 5, movementBuffer, 0, movementBuffer.Length * 4);
+
+			// update the state for animations, and time so it isn't deleted
 			player.RemoteState = data[offset + 4];
 			player.timeSinceLastUpdate = 0.0f;
 

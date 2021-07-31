@@ -5,6 +5,12 @@ public class Player : KinematicBody2D {
 	public const float MAX_VELOCITY = 200;
 	public const float FORCED_DEAD_TIME = 400;
 
+	const byte STATE_JUMPING   = 1 << 0;
+	const byte STATE_FALLING   = 1 << 1;
+	const byte STATE_DEAD      = 1 << 2;
+	const byte STATE_KILLABLE  = 1 << 3;
+	const byte STATE_JUST_DIED = 1 << 4;
+
 	const float EPSILON = 0.000001f;
 	const float ACCEL = 2.5f;
 	const float AIR_ACCEL = 2.5f;
@@ -34,24 +40,24 @@ public class Player : KinematicBody2D {
 		get {
 			byte state = 0;
 			if (jumping)
-				state += 1 << 0;
+				state += STATE_JUMPING;
 			if (falling)
-				state += 1 << 1;
+				state += STATE_FALLING;
 			if (dead)
-				state += 1 << 2;
+				state += STATE_DEAD;
 			if (killable)
-				state += 1 << 3;
+				state += STATE_KILLABLE;
 			if (justDied)
-				state += 1 << 4;
+				state += STATE_JUST_DIED;
 			return state;
 		}
 		set {
 			bool lastDead = dead;
-			jumping  = (value & (1 << 0)) != 0;
-			falling  = (value & (1 << 1)) != 0;
-			dead     = (value & (1 << 2)) != 0;
-			killable = (value & (1 << 3)) != 0;
-			justDied = (value & (1 << 4)) != 0;
+			jumping  = (value & STATE_JUMPING) != 0;
+			falling  = (value & STATE_FALLING) != 0;
+			dead     = (value & STATE_DEAD) != 0;
+			killable = (value & STATE_KILLABLE) != 0;
+			justDied = (value & STATE_JUST_DIED) != 0;
 			// @Note(sushi): if the remote player just died, set the timer so the animation plays
 			if (justDied || (!lastDead && dead)) {
 				remainingForcedDeadTime = FORCED_DEAD_TIME;
@@ -101,6 +107,7 @@ public class Player : KinematicBody2D {
 		process(delta);
 	}
 
+	// this is only run on the local player
 	public void LocalProcess(float delta) {
 		// milliseconds
 		delta *= 1000;
@@ -250,6 +257,7 @@ public class Player : KinematicBody2D {
 		velocity = MoveAndSlide(velocity, new Vector2(0, -1), false, 4, (float) Math.PI / 16, true);
 	}
 
+	// this is only run on remote players
 	public void RemoteProcess(float delta) {
 		delta *= 1000;
 

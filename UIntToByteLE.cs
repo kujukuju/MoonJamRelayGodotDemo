@@ -1,5 +1,6 @@
 using System.Runtime.InteropServices;
 
+// union to make casting the player id easier
 [StructLayout(LayoutKind.Explicit)]
 public struct UIntToByteLE {
     [FieldOffset(0)]
