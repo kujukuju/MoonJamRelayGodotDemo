@@ -63,7 +63,7 @@ public class Scene : Node2D {
 		sendBuffer[6] = id.B2;
 		sendBuffer[7] = id.B3;
 
-		Godot.Error attempt = socket.ConnectToUrl("ws://127.0.0.1:58008");
+		Godot.Error attempt = socket.ConnectToUrl("wss://relay.moonjam.dev/v1");
 		if (attempt == Godot.Error.Ok) {
 			GD.Print("Websocket connected. " + attempt);
 		} else {
