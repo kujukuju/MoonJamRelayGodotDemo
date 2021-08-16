@@ -6,7 +6,7 @@ public class Scene : Node2D {
 	const float TICK_RATE = 1.0f / 15;
 	const uint MOON_ID = 69;
 	const string MOON_KEY_FILE = "moon.txt";
-	const string PLEB_KEY_FILE = "pleb.txt";
+	const string PLEB_KEY_FILE = "player.txt";
 	const int PACKET_SIZE = sizeof(int) + 1 + (4 * sizeof(float));
 
 	[Export]
