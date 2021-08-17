@@ -4,10 +4,9 @@ using Godot;
 
 public class Scene : Node2D {
 	const float TICK_RATE = 1.0f / 15;
-	const uint MOON_ID = 69;
 	const string MOON_KEY_FILE = "moon.txt";
 	const string PLEB_KEY_FILE = "player.txt";
-	const int PACKET_SIZE = sizeof(int) + 1 + (4 * sizeof(float));
+	const int PACKET_SIZE = sizeof(int) + 2 + (4 * sizeof(float));
 
 	[Export]
 	public PackedScene playerScene;
@@ -17,16 +16,18 @@ public class Scene : Node2D {
 	// buffer for the send packet
 	//  4 : room/game id
 	//  4 : player id int
+	//  1 : moon flag
 	//  1 : player flags
 	//  16: 4*float for pos/vel
 	byte[] sendBuffer = new byte[4 + PACKET_SIZE];
 	UIntToByteLE id = new UIntToByteLE();
+	bool moon = false;
 	float[] movementBuffer = new float[4];
 	float accumulator;
 
 	Vector2 startPos;
 
-	Dictionary<uint, Player> players = new Dictionary<uint, Player>();
+	public Dictionary<uint, Player> players = new Dictionary<uint, Player>();
 	Player myPlayer;
 
 	public override void _Ready() {
@@ -39,14 +40,13 @@ public class Scene : Node2D {
 
 		// try loading moon's lobby key first
 		string key = LoadKey(MOON_KEY_FILE);
-		id.Value = MOON_ID;
+		id.Value = GD.Randi();
+		moon = true;
 
 		// if we don't find it, then join as a pleb
 		if (key == null) {
 			key = LoadKey(PLEB_KEY_FILE);
-			while (id.Value == 69) {
-				id.Value = GD.Randi();
-			}
+			moon = false;
 		}
 		// key files were missing, the game will run but the player will be alone
 		// @Note(sushi): probably add a warning for this?
@@ -62,6 +62,8 @@ public class Scene : Node2D {
 		sendBuffer[5] = id.B1;
 		sendBuffer[6] = id.B2;
 		sendBuffer[7] = id.B3;
+		// the next 1 byte is reserved for the flag of whether or not this is moonmoon
+		sendBuffer[8] = moon ? (byte) 1 : (byte) 0;
 
 		Godot.Error attempt = socket.ConnectToUrl("wss://relay.moonjam.dev/v1");
 		if (attempt == Godot.Error.Ok) {
@@ -76,12 +78,11 @@ public class Scene : Node2D {
 		myPlayer = playerScene.Instance() as Player;
 		AddChild(myPlayer);
 		myPlayer.Position = startPos;
-		myPlayer.Init(id.Value == MOON_ID);
+		myPlayer.Init(moon);
 		myPlayer.InitLocal();
 	}
 
-	private string LoadKey(string keyFile)
-	{
+	private string LoadKey(string keyFile) {
 		using(File file = new File()) {
 			if (!file.FileExists(keyFile))
 				return null;
@@ -105,9 +106,9 @@ public class Scene : Node2D {
 		movementBuffer[1] = myPlayer.Position.y;
 		movementBuffer[2] = myPlayer.velocity.x;
 		movementBuffer[3] = myPlayer.velocity.y;
-		sendBuffer[8] = myPlayer.RemoteState;
+		sendBuffer[9] = myPlayer.RemoteState;
 		// copy the movementBuffer bytes to the sendBuffer and push it
-		Buffer.BlockCopy(movementBuffer, 0, sendBuffer, 9, movementBuffer.Length * sizeof(float));
+		Buffer.BlockCopy(movementBuffer, 0, sendBuffer, 10, movementBuffer.Length * sizeof(float));
 		peer.PutPacket(sendBuffer);
 		myPlayer.justDied = false;
 	}
@@ -140,6 +141,7 @@ public class Scene : Node2D {
 			id.B1 = data[offset + 1];
 			id.B2 = data[offset + 2];
 			id.B3 = data[offset + 3];
+			moon = data[offset + 4] == 1;
 
 			// check if the player exists, otherwise instance a new one
 			Player player;
@@ -147,7 +149,7 @@ public class Scene : Node2D {
 				player = playerScene.Instance() as Player;
 				players[id.Value] = player;
 				AddChild(player);
-				player.Init(id.Value == MOON_ID);
+				player.Init(moon);
 			} else {
 				player = players[id.Value];
 			}
@@ -155,12 +157,12 @@ public class Scene : Node2D {
 				return;
 			}
 
-			// copy the movement floats into the buffer, ignoring the id/state bytes
-			Buffer.BlockCopy(data, offset + 5, movementBuffer, 0, movementBuffer.Length * 4);
-
 			// update the state for animations, and time so it isn't deleted
-			player.RemoteState = data[offset + 4];
+			player.RemoteState = data[offset + 5];
 			player.timeSinceLastUpdate = 0.0f;
+
+			// copy the movement floats into the buffer, ignoring the id/state bytes
+			Buffer.BlockCopy(data, offset + 6, movementBuffer, 0, movementBuffer.Length * 4);
 
 			// player position smoothing so it doesn't instantly snap
 			player.Position = new Vector2(movementBuffer[0], movementBuffer[1]);
