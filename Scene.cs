@@ -21,16 +21,20 @@ public class Scene : Node2D {
 	//  16: 4*float for pos/vel
 	byte[] sendBuffer = new byte[4 + PACKET_SIZE];
 	UIntToByteLE id = new UIntToByteLE();
-	bool moon = false;
+	bool isMoon = false;
 	float[] movementBuffer = new float[4];
 	float accumulator;
 
 	Vector2 startPos;
 
+	PanelContainer HUDContainer;
+
 	public Dictionary<uint, Player> players = new Dictionary<uint, Player>();
 	Player myPlayer;
 
 	public override void _Ready() {
+		AddToGroup("scene");
+
 		socket.Connect("connection_established", this, nameof(Connected));
 		socket.Connect("connection_closed", this, nameof(Closed));
 		socket.Connect("connection_error", this, nameof(Error));
@@ -38,20 +42,22 @@ public class Scene : Node2D {
 		socket.Connect("server_close_request", this, nameof(CloseRequest));
 		GD.Seed(OS.GetUnixTime());
 
+		HUDContainer = GetNode("HUD/PanelContainer") as PanelContainer;
+
 		// try loading moon's lobby key first
 		string key = LoadKey(MOON_KEY_FILE);
 		id.Value = GD.Randi();
-		moon = true;
+		isMoon = true;
 
 		// if we don't find it, then join as a pleb
 		if (key == null) {
 			key = LoadKey(PLEB_KEY_FILE);
-			moon = false;
+			isMoon = false;
 		}
 		// key files were missing, the game will run but the player will be alone
 		// @Note(sushi): probably add a warning for this?
-		if (key == null) {
-			GD.Print("No key files found.");
+		if (key == null || key.Length < 4) {
+			GD.Print("No valid key found.");
 			key = "????";
 		}
 
@@ -63,7 +69,7 @@ public class Scene : Node2D {
 		sendBuffer[6] = id.B2;
 		sendBuffer[7] = id.B3;
 		// the next 1 byte is reserved for the flag of whether or not this is moonmoon
-		sendBuffer[8] = moon ? (byte) 1 : (byte) 0;
+		sendBuffer[8] = isMoon ? (byte) 1 : (byte) 0;
 
 		Godot.Error attempt = socket.ConnectToUrl("wss://relay.moonjam.dev/v1");
 		if (attempt == Godot.Error.Ok) {
@@ -78,8 +84,10 @@ public class Scene : Node2D {
 		myPlayer = playerScene.Instance() as Player;
 		AddChild(myPlayer);
 		myPlayer.Position = startPos;
-		myPlayer.Init(moon);
+		myPlayer.Init(id.Value, isMoon);
 		myPlayer.InitLocal();
+
+		ResizePlayerCount();
 	}
 
 	private string LoadKey(string keyFile) {
@@ -141,7 +149,7 @@ public class Scene : Node2D {
 			id.B1 = data[offset + 1];
 			id.B2 = data[offset + 2];
 			id.B3 = data[offset + 3];
-			moon = data[offset + 4] == 1;
+			isMoon = data[offset + 4] == 1;
 
 			// check if the player exists, otherwise instance a new one
 			Player player;
@@ -149,7 +157,8 @@ public class Scene : Node2D {
 				player = playerScene.Instance() as Player;
 				players[id.Value] = player;
 				AddChild(player);
-				player.Init(moon);
+				player.Init(id.Value, isMoon);
+				ResizePlayerCount();
 			} else {
 				player = players[id.Value];
 			}
@@ -172,5 +181,19 @@ public class Scene : Node2D {
 
 	public void CloseRequest(int code, String reason) {
 		GD.Print("Close request... " + code + " " + reason);
+	}
+
+	public void FreePlayer(Player player) {
+		if (players.ContainsKey(player.id)) {
+			players.Remove(player.id);
+		}
+		if (IsInstanceValid(player) && !player.IsQueuedForDeletion()) {
+			player.QueueFree();
+		}
+		ResizePlayerCount();
+	}
+
+	public void ResizePlayerCount() {
+		HUDContainer.RectSize = Vector2.Zero;
 	}
 }

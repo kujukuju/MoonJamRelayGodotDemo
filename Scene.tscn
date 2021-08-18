@@ -2,7 +2,7 @@
 
 [ext_resource path="res://assets/08-Box/Idle.png" type="Texture" id=1]
 [ext_resource path="res://assets/14-TileSets/spikes.png" type="Texture" id=2]
-[ext_resource path="res://assets/TriplexSerif-Light.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://assets/TriplexSerif32.tres" type="DynamicFont" id=3]
 [ext_resource path="res://assets/14-TileSets/Decorations (32x32).png" type="Texture" id=4]
 [ext_resource path="res://assets/14-TileSets/Terrain (32x32).png" type="Texture" id=5]
 [ext_resource path="res://Scene.cs" type="Script" id=6]
@@ -1011,9 +1011,12 @@ points = PoolVector2Array( 32, 12, 0, 12, 0, 0, 32, 0 )
 [sub_resource type="RectangleShape2D" id=81]
 extents = Vector2( 10, 8 )
 
-[sub_resource type="DynamicFont" id=82]
-size = 32
-font_data = ExtResource( 3 )
+[sub_resource type="StyleBoxFlat" id=82]
+content_margin_left = 4.0
+content_margin_right = 4.0
+content_margin_top = 4.0
+content_margin_bottom = 4.0
+bg_color = Color( 0.2, 0.2, 0.2, 0.678431 )
 
 [node name="Scene" type="Node2D"]
 script = ExtResource( 6 )
@@ -1347,13 +1350,39 @@ __meta__ = {
 [node name="CollisionShape2D" type="CollisionShape2D" parent="boxes/box14/StaticBody2D"]
 shape = SubResource( 81 )
 
-[node name="RichTextLabel" type="RichTextLabel" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="HUD"]
+margin_right = 8.0
+margin_bottom = 40.0
+custom_styles/panel = SubResource( 82 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerCount" type="Label" parent="HUD/PanelContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 4.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 3 )
+script = ExtResource( 8 )
+
+[node name="HelpText" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HelpText"]
 margin_left = 128.0
 margin_top = 152.0
 margin_right = 272.0
 margin_bottom = 264.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Move with
 WASD"
@@ -1362,12 +1391,12 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="RichTextLabel2" type="RichTextLabel" parent="."]
+[node name="RichTextLabel2" type="RichTextLabel" parent="HelpText"]
 margin_left = 128.0
 margin_right = 320.0
 margin_bottom = 112.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "You can climb
 walls!"
@@ -1376,13 +1405,13 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="RichTextLabel3" type="RichTextLabel" parent="."]
+[node name="RichTextLabel3" type="RichTextLabel" parent="HelpText"]
 margin_left = 288.0
 margin_top = -144.0
 margin_right = 624.0
 margin_bottom = -32.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Hold W to jump higher"
 __meta__ = {
@@ -1390,13 +1419,13 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="RichTextLabel4" type="RichTextLabel" parent="."]
+[node name="RichTextLabel4" type="RichTextLabel" parent="HelpText"]
 margin_left = 568.0
 margin_top = 128.0
 margin_right = 1064.0
 margin_bottom = 240.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Press SHIFT after getting an orb to dash"
 __meta__ = {
@@ -1404,13 +1433,13 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="RichTextLabel5" type="RichTextLabel" parent="."]
+[node name="RichTextLabel5" type="RichTextLabel" parent="HelpText"]
 margin_left = 768.0
 margin_top = -512.0
 margin_right = 1264.0
 margin_bottom = -400.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "You're on your own.
 Good luck."
@@ -1419,161 +1448,157 @@ __meta__ = {
 "_editor_description_": ""
 }
 
-[node name="PlayerCount" type="RichTextLabel" parent="."]
+[node name="PlayerCounts" type="Control" parent="."]
+visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerCount" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = 704.0
 margin_top = -160.0
 margin_right = 1200.0
 margin_bottom = -48.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount2" type="RichTextLabel" parent="."]
+[node name="PlayerCount2" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = 280.0
 margin_top = -1248.0
 margin_right = 776.0
 margin_bottom = -1136.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount3" type="RichTextLabel" parent="."]
+[node name="PlayerCount3" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = -672.0
 margin_top = -992.0
 margin_right = -176.0
 margin_bottom = -880.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount4" type="RichTextLabel" parent="."]
+[node name="PlayerCount4" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = -840.0
 margin_top = -1632.0
 margin_right = -344.0
 margin_bottom = -1520.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount5" type="RichTextLabel" parent="."]
+[node name="PlayerCount5" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = -232.0
 margin_top = -2144.0
 margin_right = 264.0
 margin_bottom = -2032.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount6" type="RichTextLabel" parent="."]
+[node name="PlayerCount6" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = 512.0
 margin_top = -1824.0
 margin_right = 1008.0
 margin_bottom = -1712.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount7" type="RichTextLabel" parent="."]
+[node name="PlayerCount7" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = 960.0
 margin_top = -2304.0
 margin_right = 1456.0
 margin_bottom = -2192.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount8" type="RichTextLabel" parent="."]
+[node name="PlayerCount8" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = 1824.0
 margin_top = -2416.0
 margin_right = 2320.0
 margin_bottom = -2304.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount9" type="RichTextLabel" parent="."]
+[node name="PlayerCount9" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = 1824.0
 margin_top = -1440.0
 margin_right = 2320.0
 margin_bottom = -1328.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
 }
 
-[node name="PlayerCount10" type="RichTextLabel" parent="."]
+[node name="PlayerCount10" type="RichTextLabel" parent="PlayerCounts"]
 margin_left = 4192.0
 margin_top = -672.0
 margin_right = 4688.0
 margin_bottom = -560.0
 rect_scale = Vector2( 0.500452, 0.500452 )
-custom_fonts/normal_font = SubResource( 82 )
+custom_fonts/normal_font = ExtResource( 3 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 text = "Currently there are
 8 players"
-script = ExtResource( 8 )
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
