@@ -28,4 +28,4 @@ void fragment()
 
 [resource]
 shader = SubResource( 52 )
-shader_param/outlineColor = Color( 1, 0.137255, 0.137255, 1 )
+shader_param/outlineColor = Color( 0.67451, 0.827451, 1, 1 )

@@ -17,10 +17,11 @@ public class Player : KinematicBody2D {
 	[Export] float FRICTION = 1;
 	[Export] float AIR_FRICTION = 0.05f;
 	[Export] float GRAVITY = 1.1f;
-	[Export] float GRAVITY_MULT = 1.2f;
+	[Export] float GRAVITY_MULT = 1.1f;
 	[Export] float JUMP_INSTANT_VELOCITY = 215;
 	[Export] float JUMP_HOLD_ACCEL = 1.0f;
 	[Export] float POP_TIME = 1000;
+	[Export] float WALLJUMP_GRACE_TIME = 200;
 
 	public uint id;
 	public Vector2 velocity = new Vector2(0, 0);
@@ -32,6 +33,7 @@ public class Player : KinematicBody2D {
 	public bool dead = false;
 	public bool killable = true;
 	public bool justDied = false;
+	public float walljumpGrace = 0;
 
 	public float timeSinceLastUpdate = 0.0f;
 
@@ -124,6 +126,7 @@ public class Player : KinematicBody2D {
 
 		float poppedMul = remainingPoppedTime > 0 ? 0.5f - (remainingPoppedTime / POP_TIME / 2.0f) : 1;
 		remainingPoppedTime = Math.Max(remainingPoppedTime - delta, 0);
+		walljumpGrace -= delta;
 
 		// check spike collisions for death
 		bool angled = false;
@@ -199,7 +202,7 @@ public class Player : KinematicBody2D {
 			float previousSpeed = Math.Abs(velocity.x);
 			velocity.x += accel * delta * poppedMul;
 
-			if (!angled && Mathf.Abs(accel) < 0.01) {
+			if (!angled && walljumpGrace <= 0 && Mathf.Abs(accel) < 0.01) {
 				float decay = 1 / (1 + (delta * AIR_FRICTION));
 				velocity.x *= decay;
 			}
@@ -231,6 +234,7 @@ public class Player : KinematicBody2D {
 			if (onWall && !IsOnFloor()) {
 				float direction = onRightWall ? -1 : 1;
 				velocity.x += direction * JUMP_INSTANT_VELOCITY * poppedMul;
+				walljumpGrace = WALLJUMP_GRACE_TIME;
 			}
 
 			jumping = true;
