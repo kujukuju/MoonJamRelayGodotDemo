@@ -21,7 +21,7 @@ public class Player : KinematicBody2D {
 	[Export] float JUMP_INSTANT_VELOCITY = 215;
 	[Export] float JUMP_HOLD_ACCEL = 1.0f;
 	[Export] float POP_TIME = 1000;
-	[Export] float WALLJUMP_GRACE_TIME = 200;
+	[Export] float WALLJUMP_GRACE_TIME = 300;
 
 	public uint id;
 	public Vector2 velocity = new Vector2(0, 0);
@@ -232,7 +232,7 @@ public class Player : KinematicBody2D {
 		if (!jumping && canJump && jump) {
 			velocity.y = Math.Max(velocity.y - (JUMP_INSTANT_VELOCITY * poppedMul), -JUMP_INSTANT_VELOCITY * poppedMul);
 			if (onWall && !IsOnFloor()) {
-				float direction = onRightWall ? -1 : 1;
+				float direction = onRightWall ? -1.25f : 1.25f;
 				velocity.x += direction * JUMP_INSTANT_VELOCITY * poppedMul;
 				walljumpGrace = WALLJUMP_GRACE_TIME;
 			}
