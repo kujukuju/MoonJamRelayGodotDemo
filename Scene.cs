@@ -30,6 +30,8 @@ public class Scene : Node2D {
 
 	public Dictionary<uint, Player> players = new Dictionary<uint, Player>();
 	Player myPlayer;
+	Vector2 lastPos;
+	float afkAccumulator;
 
 	PanelContainer HUDContainer;
 	PanelContainer DebugContainer;
@@ -114,9 +116,26 @@ public class Scene : Node2D {
 		UpdateDebugPanel(delta);
 
 		accumulator += delta;
+		if ((lastPos - myPlayer.Position).LengthSquared() < 1) {
+			afkAccumulator += delta;
+			if (afkAccumulator > 2) {
+				afkAccumulator = 1;
+				SendPacket();
+			}
+			if (afkAccumulator >= 1) {
+				return;
+			}
+		} else {
+			afkAccumulator = 0;
+		}
 		if (accumulator < TICK_RATE)
 			return;
 		accumulator = 0.0f;
+		lastPos = myPlayer.Position;
+		SendPacket();
+	}
+
+	private void SendPacket() {
 		// populate the movementBuffer with our current pos/vel
 		movementBuffer[0] = myPlayer.Position.x;
 		movementBuffer[1] = myPlayer.Position.y;
