@@ -15,6 +15,9 @@
 [ext_resource path="res://assets/02-King Pig/Ground (38x28).png" type="Texture" id=13]
 [ext_resource path="res://assets/02-King Pig/Dead (38x28).png" type="Texture" id=14]
 
+[sub_resource type="RectangleShape2D" id=51]
+extents = Vector2( 8, 8 )
+
 [sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 4 )
 region = Rect2( 0, 0, 34, 28 )
@@ -263,12 +266,13 @@ animations = [ {
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=51]
-extents = Vector2( 8, 8 )
-
 [node name="Player" type="KinematicBody2D"]
 collision_layer = 0
 script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -8 )
+shape = SubResource( 51 )
 
 [node name="AnimatedPleb" type="AnimatedSprite" parent="."]
 position = Vector2( 1, -14 )
@@ -279,9 +283,5 @@ script = ExtResource( 8 )
 [node name="AnimatedKing" type="AnimatedSprite" parent="."]
 position = Vector2( 1, -14 )
 frames = SubResource( 50 )
-animation = "death"
+animation = "running"
 script = ExtResource( 8 )
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 0, -8 )
-shape = SubResource( 51 )

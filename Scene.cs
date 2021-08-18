@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Godot;
 
 public class Scene : Node2D {
-	const float TICK_RATE = 1.0f / 15;
+	const float TICK_RATE = 1.0f / 20;
 	const string MOON_KEY_FILE = "moon.txt";
 	const string PLEB_KEY_FILE = "player.txt";
 	const int PACKET_SIZE = sizeof(int) + 2 + (4 * sizeof(float));
@@ -93,7 +93,7 @@ public class Scene : Node2D {
 		AddChild(myPlayer);
 		myPlayer.Position = startPos;
 		myPlayer.Init(id.Value, isMoon);
-		myPlayer.InitLocal();
+		myPlayer.InitLocal(isMoon);
 
 		ResizePlayerCount();
 	}
@@ -239,7 +239,7 @@ public class Scene : Node2D {
 			return;
 		debugAccumulator -= 1;
 		if (debugBytes > 1000)
-			DebugText.Text = $"{debugBytes / 1000}kB/s";
+			DebugText.Text = $"{debugBytes / 1000:0.0}kB/s";
 		else
 			DebugText.Text = $"{debugBytes}B/s";
 		DebugContainer.RectSize = Vector2.Zero;

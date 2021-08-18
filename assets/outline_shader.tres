@@ -1,0 +1,31 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=52]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform vec4 outlineColor : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
+
+void fragment()
+{
+    vec4 tcol = texture(TEXTURE, UV);
+
+    if (tcol.a == 0.0)
+    {
+        if (texture(TEXTURE, UV + vec2(0.0,          TEXTURE_PIXEL_SIZE.y)).a  != 0.0 ||
+            texture(TEXTURE, UV + vec2(0.0,         -TEXTURE_PIXEL_SIZE.y)).a  != 0.0 ||
+            texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x,  0.0)).a          != 0.0 ||
+            texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x, 0.0)).a          != 0.0 ||
+            texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x, TEXTURE_PIXEL_SIZE.y)).a  != 0.0 ||
+            texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x, -TEXTURE_PIXEL_SIZE.y)).a != 0.0 ||
+            texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x,  TEXTURE_PIXEL_SIZE.y)).a  != 0.0 ||
+            texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x,  -TEXTURE_PIXEL_SIZE.y)).a != 0.0) 
+            tcol = outlineColor;
+    }
+
+    COLOR = tcol;
+}"
+
+[resource]
+shader = SubResource( 52 )
+shader_param/outlineColor = Color( 1, 0.137255, 0.137255, 1 )

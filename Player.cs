@@ -84,7 +84,7 @@ public class Player : KinematicBody2D {
 		GetNode("AnimatedKing").QueueFree();
 	}
 
-	public void InitLocal() {
+	public void InitLocal(bool isKing) {
 		AddToGroup("local_player");
 		process = LocalProcess;
 		Camera2D camera = new Camera2D();
@@ -93,6 +93,14 @@ public class Player : KinematicBody2D {
 		AddChild(camera);
 		camera.Zoom = new Vector2(0.5f, 0.5f);
 		camera.Current = true;
+		ZIndex = 100;
+		AnimatedSprite sprite;
+		if (isKing) {
+			sprite = GetNode("AnimatedKing") as AnimatedSprite;
+		} else {
+			sprite = GetNode("AnimatedPleb") as AnimatedSprite;
+		}
+		sprite.Material = GD.Load("res://assets/outline_shader.tres") as Material;
 	}
 
 	public void Pop() {
