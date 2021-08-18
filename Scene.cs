@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Godot;
 
 public class Scene : Node2D {
-	const float TICK_RATE = 1.0f / 15;
+	const float TICK_RATE = 1.0f / 12;
 	const string MOON_KEY_FILE = "moon.txt";
 	const string PLEB_KEY_FILE = "player.txt";
 	const int PACKET_SIZE = sizeof(int) + 2 + (4 * sizeof(float));
@@ -27,10 +28,14 @@ public class Scene : Node2D {
 
 	Vector2 startPos;
 
-	PanelContainer HUDContainer;
-
 	public Dictionary<uint, Player> players = new Dictionary<uint, Player>();
 	Player myPlayer;
+
+	PanelContainer HUDContainer;
+	PanelContainer DebugContainer;
+	Label DebugText;
+	float debugAccumulator;
+	float debugBytes;
 
 	public override void _Ready() {
 		AddToGroup("scene");
@@ -43,6 +48,7 @@ public class Scene : Node2D {
 		GD.Seed(OS.GetUnixTime());
 
 		HUDContainer = GetNode("HUD/PanelContainer") as PanelContainer;
+		InitDebugContainer();
 
 		// try loading moon's lobby key first
 		string key = LoadKey(MOON_KEY_FILE);
@@ -105,6 +111,8 @@ public class Scene : Node2D {
 		if (peer == null)
 			return;
 
+		UpdateDebugPanel(delta);
+
 		accumulator += delta;
 		if (accumulator < TICK_RATE)
 			return;
@@ -142,6 +150,7 @@ public class Scene : Node2D {
 		if (data.Length == 0 || data.Length % PACKET_SIZE != 0) {
 			return;
 		}
+		debugBytes += data.Length;
 
 		for (int offset = 0; offset < data.Length; offset += PACKET_SIZE) {
 			// read in the remote player's id
@@ -193,7 +202,29 @@ public class Scene : Node2D {
 		ResizePlayerCount();
 	}
 
-	public void ResizePlayerCount() {
+	private void ResizePlayerCount() {
 		HUDContainer.RectSize = Vector2.Zero;
+	}
+
+	[Conditional("DEBUG")]
+	private void InitDebugContainer()
+	{
+		DebugContainer = GetNode("HUD/DebugContainer") as PanelContainer;
+		DebugText = DebugContainer.GetNode("DebugText") as Label;
+		DebugContainer.Visible = true;
+	}
+
+	[Conditional("DEBUG")]
+	private void UpdateDebugPanel(float delta) {
+		debugAccumulator += delta;
+		if (debugAccumulator < 1)
+			return;
+		debugAccumulator -= 1;
+		if (debugBytes > 1000)
+			DebugText.Text = $"{debugBytes / 1000}kB/s";
+		else
+			DebugText.Text = $"{debugBytes}B/s";
+		DebugContainer.RectSize = Vector2.Zero;
+		debugBytes = 0;
 	}
 }
