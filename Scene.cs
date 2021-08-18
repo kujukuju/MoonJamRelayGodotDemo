@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Godot;
 
 public class Scene : Node2D {
-	const float TICK_RATE = 1.0f / 12;
+	const float TICK_RATE = 1.0f / 15;
 	const string MOON_KEY_FILE = "moon.txt";
 	const string PLEB_KEY_FILE = "player.txt";
 	const int PACKET_SIZE = sizeof(int) + 2 + (4 * sizeof(float));
@@ -182,7 +182,6 @@ public class Scene : Node2D {
 			// copy the movement floats into the buffer, ignoring the id/state bytes
 			Buffer.BlockCopy(data, offset + 6, movementBuffer, 0, movementBuffer.Length * 4);
 
-			// player position smoothing so it doesn't instantly snap
 			player.Position = new Vector2(movementBuffer[0], movementBuffer[1]);
 			player.velocity = new Vector2(movementBuffer[2], movementBuffer[3]);
 		}
