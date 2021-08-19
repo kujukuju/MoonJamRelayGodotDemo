@@ -1,7 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=10 format=2]
 
+[ext_resource path="res://objects/StartArea.cs" type="Script" id=1]
 [ext_resource path="res://Level.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/TriplexSerif32.tres" type="DynamicFont" id=3]
+[ext_resource path="res://objects/Box.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Scene.cs" type="Script" id=6]
 [ext_resource path="res://objects/HUDPlayerCount.cs" type="Script" id=8]
 [ext_resource path="res://objects/Player.tscn" type="PackedScene" id=12]
@@ -13,11 +15,12 @@ content_margin_top = 4.0
 content_margin_bottom = 4.0
 bg_color = Color( 0.2, 0.2, 0.2, 0.678431 )
 
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 10, 42 )
+
 [node name="Scene" type="Node2D"]
 script = ExtResource( 6 )
 playerScene = ExtResource( 12 )
-
-[node name="Level" parent="." instance=ExtResource( 2 )]
 
 [node name="HUD" type="CanvasLayer" parent="."]
 layer = 2
@@ -54,3 +57,26 @@ margin_top = 4.0
 margin_right = 4.0
 margin_bottom = 18.0
 custom_fonts/font = ExtResource( 3 )
+
+[node name="Level" parent="." instance=ExtResource( 2 )]
+
+[node name="StartArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StartArea"]
+position = Vector2( -72, 159 )
+shape = SubResource( 2 )
+
+[node name="Box" parent="StartArea" instance=ExtResource( 4 )]
+position = Vector2( -66, 184 )
+
+[node name="Box2" parent="StartArea" instance=ExtResource( 4 )]
+position = Vector2( -66, 168 )
+
+[node name="Box3" parent="StartArea" instance=ExtResource( 4 )]
+position = Vector2( -66, 152 )
+
+[node name="Box4" parent="StartArea" instance=ExtResource( 4 )]
+position = Vector2( -66, 136 )
