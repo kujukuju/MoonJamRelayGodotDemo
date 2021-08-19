@@ -39,9 +39,11 @@ public class Scene : Node2D {
 	float debugAccumulator;
 	float debugBytes;
 
-	public override void _Ready() {
+	public Scene() {
 		AddToGroup("scene");
+	}
 
+	public override void _Ready() {
 		socket.Connect("connection_established", this, nameof(Connected));
 		socket.Connect("connection_closed", this, nameof(Closed));
 		socket.Connect("connection_error", this, nameof(Error));
@@ -86,7 +88,7 @@ public class Scene : Node2D {
 			GD.Print("Websocket failed to connect. " + attempt);
 		}
 
-		Position2D start = GetNode("Start") as Position2D;
+		Position2D start = GetNode("Level/Start") as Position2D;
 		startPos = start.Position;
 
 		myPlayer = playerScene.Instance() as Player;
