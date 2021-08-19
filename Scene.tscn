@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://objects/StartArea.cs" type="Script" id=1]
 [ext_resource path="res://Level.tscn" type="PackedScene" id=2]
 [ext_resource path="res://assets/TriplexSerif32.tres" type="DynamicFont" id=3]
 [ext_resource path="res://objects/Box.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/Timer.cs" type="Script" id=5]
 [ext_resource path="res://Scene.cs" type="Script" id=6]
 [ext_resource path="res://objects/HUDPlayerCount.cs" type="Script" id=8]
 [ext_resource path="res://objects/Player.tscn" type="PackedScene" id=12]
@@ -41,11 +42,27 @@ margin_bottom = 36.0
 custom_fonts/font = ExtResource( 3 )
 script = ExtResource( 8 )
 
-[node name="DebugContainer" type="PanelContainer" parent="HUD"]
-visible = false
-margin_top = 42.0
+[node name="StopwatchContainer" type="PanelContainer" parent="HUD"]
+margin_top = 41.0
 margin_right = 8.0
-margin_bottom = 64.0
+margin_bottom = 81.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Label" parent="HUD/StopwatchContainer"]
+margin_left = 4.0
+margin_top = 4.0
+margin_right = 4.0
+margin_bottom = 36.0
+custom_fonts/font = ExtResource( 3 )
+
+[node name="DebugContainer" type="PanelContainer" parent="HUD"]
+margin_top = 82.0
+margin_right = 8.0
+margin_bottom = 122.0
 custom_styles/panel = SubResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
@@ -55,7 +72,7 @@ __meta__ = {
 margin_left = 4.0
 margin_top = 4.0
 margin_right = 4.0
-margin_bottom = 18.0
+margin_bottom = 36.0
 custom_fonts/font = ExtResource( 3 )
 
 [node name="Level" parent="." instance=ExtResource( 2 )]
