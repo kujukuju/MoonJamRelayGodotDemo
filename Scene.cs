@@ -5,6 +5,7 @@ using Godot;
 
 public class Scene : Node2D {
 	const float TICK_RATE = 1.0f / 20;
+	const string RELAY_URL = "wss://relay.moonjam.dev/v1";
 	const string MOON_KEY_FILE = "moon.txt";
 	const string PLEB_KEY_FILE = "player.txt";
 	const int PACKET_SIZE = sizeof(int) + 2 + (4 * sizeof(float));
@@ -100,13 +101,11 @@ public class Scene : Node2D {
 		if (isMoon) {
 			StartArea.Connect("body_entered", this, nameof(StartArea_Entered));
 		}
-
-		ResizePlayerCount();
 	}
 
 	private void ConnectToRelay() {
 		peer = null;
-		Error attempt = socket.ConnectToUrl("wss://relay.moonjam.dev/v1");
+		Error attempt = socket.ConnectToUrl(RELAY_URL);
 		if (attempt == Godot.Error.Ok) {
 			GD.Print("Websocket connected. " + attempt);
 		} else {
@@ -132,6 +131,9 @@ public class Scene : Node2D {
 	}
 
 	public override void _Process(float delta) {
+		socket.Poll();
+		ResizePlayerCount();
+
 		switch (socket.GetConnectionStatus()) {
 			case NetworkedMultiplayerPeer.ConnectionStatus.Connecting:
 				return;
@@ -144,8 +146,6 @@ public class Scene : Node2D {
 				}
 				return;
 		}
-
-		socket.Poll();
 
 		if (peer == null)
 			return;
@@ -228,7 +228,6 @@ public class Scene : Node2D {
 				players[id.Value] = player;
 				AddChild(player);
 				player.Init(id.Value, isMoon);
-				ResizePlayerCount();
 			} else {
 				player = players[id.Value];
 			}
@@ -262,7 +261,6 @@ public class Scene : Node2D {
 		if (IsInstanceValid(player) && !player.IsQueuedForDeletion()) {
 			player.QueueFree();
 		}
-		ResizePlayerCount();
 	}
 
 	private void ResizePlayerCount() {
