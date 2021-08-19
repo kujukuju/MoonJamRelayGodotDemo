@@ -35,6 +35,7 @@ public class Scene : Node2D {
 	float afkAccumulator;
 
 	Area2D StartArea;
+	Area2D EndArea;
 	public bool HasStarted;
 	PanelContainer HUDContainer;
 	PanelContainer DebugContainer;
@@ -98,9 +99,10 @@ public class Scene : Node2D {
 		myPlayer.InitLocal(isMoon);
 
 		StartArea = GetNode("StartArea") as Area2D;
-		if (isMoon) {
+		if (isMoon)
 			StartArea.Connect("body_entered", this, nameof(StartArea_Entered));
-		}
+		EndArea = GetNode("EndArea") as Area2D;
+		EndArea.Connect("body_entered", this, nameof(EndArea_Entered));
 	}
 
 	private void ConnectToRelay() {
@@ -128,6 +130,11 @@ public class Scene : Node2D {
 		}
 		player.hasStarted = true;
 		HasStarted = true;
+	}
+
+	private void EndArea_Entered(Node body) {
+		Timer timer = GetNode("HUD/StopwatchContainer") as Timer;
+		timer.SetPhysicsProcess(false);
 	}
 
 	public override void _Process(float delta) {
