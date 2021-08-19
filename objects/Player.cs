@@ -10,6 +10,7 @@ public class Player : KinematicBody2D {
 	const byte STATE_DEAD      = 1 << 2;
 	const byte STATE_KILLABLE  = 1 << 3;
 	const byte STATE_JUST_DIED = 1 << 4;
+	const byte STATE_HAS_STARTED = 1 << 5;
 
 	const float EPSILON = 0.000001f;
 	[Export] float ACCEL = 2.5f;
@@ -35,6 +36,8 @@ public class Player : KinematicBody2D {
 	public bool justDied = false;
 	public float walljumpGrace = 0;
 
+	public bool hasStarted = false;
+
 	public float timeSinceLastUpdate = 0.0f;
 
 	delegate void ProcessFunc(float delta);
@@ -54,6 +57,8 @@ public class Player : KinematicBody2D {
 				state += STATE_KILLABLE;
 			if (justDied)
 				state += STATE_JUST_DIED;
+			if (hasStarted)
+				state += STATE_HAS_STARTED;
 			return state;
 		}
 		set {
@@ -63,6 +68,7 @@ public class Player : KinematicBody2D {
 			dead     = (value & STATE_DEAD) != 0;
 			killable = (value & STATE_KILLABLE) != 0;
 			justDied = (value & STATE_JUST_DIED) != 0;
+			hasStarted = (value & STATE_HAS_STARTED) != 0;
 			// @Note(sushi): if the remote player just died, set the timer so the animation plays
 			if (justDied || (!lastDead && dead)) {
 				remainingForcedDeadTime = FORCED_DEAD_TIME;
@@ -133,7 +139,7 @@ public class Player : KinematicBody2D {
 		if (!dead && killable) {
 			for (int i = 0; i < GetSlideCount(); i++) {
 				KinematicCollision2D collisions = GetSlideCollision(i);
-				if (collisions.Collider.HasMeta("spikes")) {
+				if (IsInstanceValid(collisions.Collider) && collisions.Collider.HasMeta("spikes")) {
 					dead = true;
 					justDied = true;
 					killable = false;
@@ -145,7 +151,7 @@ public class Player : KinematicBody2D {
 
 		for (int i = 0; i < GetSlideCount(); i++) {
 			KinematicCollision2D collisions = GetSlideCollision(i);
-			if (collisions.Collider.HasMeta("angled")) {
+			if (IsInstanceValid(collisions.Collider) && collisions.Collider.HasMeta("angled")) {
 				angled = true;
 			}
 		}

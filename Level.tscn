@@ -1012,7 +1012,7 @@ points = PoolVector2Array( 32, 12, 0, 12, 0, 0, 32, 0 )
 } ]
 1/z_index = 0
 
-[sub_resource type="Animation" id=96]
+[sub_resource type="Animation" id=81]
 resource_name = "input"
 loop = true
 tracks/0/type = "value"
@@ -1076,72 +1076,72 @@ tracks/4/keys = {
 "values": [ 0, 1 ]
 }
 
-[sub_resource type="StyleBoxFlat" id=97]
+[sub_resource type="StyleBoxFlat" id=82]
 content_margin_left = 4.0
 content_margin_right = 4.0
 content_margin_top = 4.0
 content_margin_bottom = 4.0
 bg_color = Color( 0.2, 0.2, 0.2, 0.678431 )
 
-[sub_resource type="AtlasTexture" id=81]
+[sub_resource type="AtlasTexture" id=83]
 atlas = ExtResource( 9 )
 region = Rect2( 0, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=82]
+[sub_resource type="AtlasTexture" id=84]
 atlas = ExtResource( 9 )
 region = Rect2( 40, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=83]
+[sub_resource type="AtlasTexture" id=85]
 atlas = ExtResource( 9 )
 region = Rect2( 80, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=84]
+[sub_resource type="AtlasTexture" id=86]
 atlas = ExtResource( 9 )
 region = Rect2( 120, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=85]
+[sub_resource type="AtlasTexture" id=87]
 atlas = ExtResource( 9 )
 region = Rect2( 160, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=86]
+[sub_resource type="AtlasTexture" id=88]
 atlas = ExtResource( 9 )
 region = Rect2( 200, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=87]
+[sub_resource type="AtlasTexture" id=89]
 atlas = ExtResource( 9 )
 region = Rect2( 240, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=88]
+[sub_resource type="AtlasTexture" id=90]
 atlas = ExtResource( 9 )
 region = Rect2( 280, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=89]
+[sub_resource type="AtlasTexture" id=91]
 atlas = ExtResource( 9 )
 region = Rect2( 320, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=90]
+[sub_resource type="AtlasTexture" id=92]
 atlas = ExtResource( 9 )
 region = Rect2( 360, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=91]
+[sub_resource type="AtlasTexture" id=93]
 atlas = ExtResource( 9 )
 region = Rect2( 400, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=92]
+[sub_resource type="AtlasTexture" id=94]
 atlas = ExtResource( 9 )
 region = Rect2( 440, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=93]
+[sub_resource type="AtlasTexture" id=95]
 atlas = ExtResource( 9 )
 region = Rect2( 480, 0, 40, 30 )
 
-[sub_resource type="AtlasTexture" id=94]
+[sub_resource type="AtlasTexture" id=96]
 atlas = ExtResource( 9 )
 region = Rect2( 520, 0, 40, 30 )
 
-[sub_resource type="SpriteFrames" id=95]
+[sub_resource type="SpriteFrames" id=97]
 animations = [ {
-"frames": [ SubResource( 81 ), SubResource( 82 ), SubResource( 83 ), SubResource( 84 ), SubResource( 85 ), SubResource( 86 ), SubResource( 87 ), SubResource( 88 ), SubResource( 89 ), SubResource( 90 ), SubResource( 91 ), SubResource( 92 ), SubResource( 93 ), SubResource( 94 ) ],
+"frames": [ SubResource( 83 ), SubResource( 84 ), SubResource( 85 ), SubResource( 86 ), SubResource( 87 ), SubResource( 88 ), SubResource( 89 ), SubResource( 90 ), SubResource( 91 ), SubResource( 92 ), SubResource( 93 ), SubResource( 94 ), SubResource( 95 ), SubResource( 96 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -1243,7 +1243,7 @@ __meta__ = {
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="InputHelp"]
 autoplay = "input"
-anims/input = SubResource( 96 )
+anims/input = SubResource( 81 )
 
 [node name="Control" type="Control" parent="InputHelp"]
 margin_right = 40.0
@@ -1259,7 +1259,7 @@ margin_top = 27.0
 margin_right = -321.0
 margin_bottom = 67.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_styles/panel = SubResource( 97 )
+custom_styles/panel = SubResource( 82 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -1279,7 +1279,7 @@ margin_top = 27.0
 margin_right = -282.0
 margin_bottom = 67.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_styles/panel = SubResource( 97 )
+custom_styles/panel = SubResource( 82 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -1299,7 +1299,7 @@ margin_top = 27.0
 margin_right = -248.0
 margin_bottom = 67.0
 rect_scale = Vector2( 0.5, 0.5 )
-custom_styles/panel = SubResource( 97 )
+custom_styles/panel = SubResource( 82 )
 __meta__ = {
 "_edit_lock_": true,
 "_edit_use_anchors_": false
@@ -1328,13 +1328,19 @@ __meta__ = {
 margin_left = -464.0
 margin_top = 219.0
 margin_right = -16.0
-margin_bottom = 331.0
+margin_bottom = 373.0
 rect_scale = Vector2( 0.500452, 0.500452 )
 custom_fonts/normal_font = ExtResource( 8 )
 custom_colors/default_color = Color( 1, 1, 1, 1 )
 bbcode_enabled = true
-bbcode_text = "[center]Press F1 to swap controls[/center]"
-text = "Press F1 to swap controls"
+bbcode_text = "[center]Game starts when the king
+walks into the boxes
+
+Press F1 to swap controls[/center]"
+text = "Game starts when the king
+walks into the boxes
+
+Press F1 to swap controls"
 __meta__ = {
 "_edit_use_anchors_": false,
 "_editor_description_": ""
@@ -1583,167 +1589,167 @@ __meta__ = {
 
 [node name="JumpBubble" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 688, 48 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble2" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 640, -464 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble3" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 8, -976 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble4" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 136, -1040 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble5" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 264, -1104 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble6" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 504, -800 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble7" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -120, -912 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble8" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -248, -848 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble9" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 312, -1952 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble10" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -352, -1042 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble11" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -352, -1302 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble12" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -352, -1237 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble13" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -352, -1172 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble14" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -352, -1107 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble15" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -352, -1368 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble16" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( -792, -1448 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble17" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 312, -1680 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble18" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 312, -1824 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble19" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 312, -2080 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble20" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 1744, -1336 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble21" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2064, -1552 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble22" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 3376, -944 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble23" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2064, -1680 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble24" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2064, -1424 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble26" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 3504, -816 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble27" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2800, -1520 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble28" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 3440, -880 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble29" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 3312, -1008 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble30" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 3248, -1072 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble31" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 3184, -1136 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble32" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2864, -1456 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble33" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2928, -1392 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble34" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2992, -1328 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble35" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 3056, -1264 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble36" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 3120, -1200 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble37" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2544, -1776 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble38" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2608, -1712 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble39" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2672, -1648 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble40" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2736, -1584 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble41" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2416, -1904 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="JumpBubble42" parent="Bubbles" instance=ExtResource( 12 )]
 position = Vector2( 2480, -1840 )
-frames = SubResource( 95 )
+frames = SubResource( 97 )
 
 [node name="Boxes" type="Node" parent="."]
 

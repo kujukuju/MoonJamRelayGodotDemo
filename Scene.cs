@@ -33,11 +33,15 @@ public class Scene : Node2D {
 	Vector2 lastPos;
 	float afkAccumulator;
 
+	Area2D StartArea;
+	public bool HasStarted;
 	PanelContainer HUDContainer;
 	PanelContainer DebugContainer;
 	Label DebugText;
 	float debugAccumulator;
 	float debugBytes;
+
+	public bool IsConnectedToRelay => socket.GetConnectionStatus() == NetworkedMultiplayerPeer.ConnectionStatus.Connected;
 
 	public Scene() {
 		AddToGroup("scene");
@@ -68,7 +72,7 @@ public class Scene : Node2D {
 		// @Note(sushi): probably add a warning for this?
 		if (key == null || key.Length < 4) {
 			GD.Print("No valid key found.");
-			key = "????";
+			key = "pleb";
 		}
 
 		// set the first 4 bytes of the buffer to the lobby key
@@ -81,12 +85,7 @@ public class Scene : Node2D {
 		// the next 1 byte is reserved for the flag of whether or not this is moonmoon
 		sendBuffer[8] = isMoon ? (byte) 1 : (byte) 0;
 
-		Godot.Error attempt = socket.ConnectToUrl("wss://relay.moonjam.dev/v1");
-		if (attempt == Godot.Error.Ok) {
-			GD.Print("Websocket connected. " + attempt);
-		} else {
-			GD.Print("Websocket failed to connect. " + attempt);
-		}
+		ConnectToRelay();
 
 		Position2D start = GetNode("Level/Start") as Position2D;
 		startPos = start.Position;
@@ -97,7 +96,22 @@ public class Scene : Node2D {
 		myPlayer.Init(id.Value, isMoon);
 		myPlayer.InitLocal(isMoon);
 
+		StartArea = GetNode("StartArea") as Area2D;
+		if (isMoon) {
+			StartArea.Connect("body_entered", this, nameof(StartArea_Entered));
+		}
+
 		ResizePlayerCount();
+	}
+
+	private void ConnectToRelay() {
+		peer = null;
+		Error attempt = socket.ConnectToUrl("wss://relay.moonjam.dev/v1");
+		if (attempt == Godot.Error.Ok) {
+			GD.Print("Websocket connected. " + attempt);
+		} else {
+			GD.Print("Websocket failed to connect. " + attempt);
+		}
 	}
 
 	private string LoadKey(string keyFile) {
@@ -109,6 +123,14 @@ public class Scene : Node2D {
 		}
 	}
 
+	private void StartArea_Entered(Node body) {
+		if (!(body is Player player)) {
+			return;
+		}
+		player.hasStarted = true;
+		HasStarted = true;
+	}
+
 	public override void _Process(float delta) {
 		socket.Poll();
 
@@ -118,6 +140,17 @@ public class Scene : Node2D {
 		UpdateDebugPanel(delta);
 
 		accumulator += delta;
+		switch (socket.GetConnectionStatus()) {
+			case NetworkedMultiplayerPeer.ConnectionStatus.Connecting:
+				return;
+			case NetworkedMultiplayerPeer.ConnectionStatus.Disconnected:
+				if (accumulator > 15.0f)
+					ConnectToRelay();
+				return;
+		}
+
+		// @Note(sushi): this reduces the updates to be once a second if the player
+		//  has been standing in 1 spot for too long
 		if ((lastPos - myPlayer.Position).LengthSquared() < 1) {
 			afkAccumulator += delta;
 			if (afkAccumulator > 2) {
@@ -130,6 +163,7 @@ public class Scene : Node2D {
 		} else {
 			afkAccumulator = 0;
 		}
+
 		if (accumulator < TICK_RATE)
 			return;
 		accumulator = 0.0f;
@@ -152,16 +186,17 @@ public class Scene : Node2D {
 
 	public void Connected(string protocol) {
 		GD.Print("Connected..." + protocol);
-
 		peer = socket.GetPeer(1);
 	}
 
 	public void Closed(bool clean) {
 		GD.Print("Closed... " + clean);
+		peer = null;
 	}
 
 	public void Error() {
 		GD.Print("Error...");
+		peer = null;
 	}
 
 	public void Data() {
@@ -205,6 +240,9 @@ public class Scene : Node2D {
 
 			player.Position = new Vector2(movementBuffer[0], movementBuffer[1]);
 			player.velocity = new Vector2(movementBuffer[2], movementBuffer[3]);
+
+			if (player.hasStarted)
+				HasStarted = true;
 		}
 	}
 

@@ -8,6 +8,10 @@ public class HUDPlayerCount : Label {
 	}
 
 	public override void _PhysicsProcess(float _delta) {
+		if (!owner.IsConnectedToRelay) {
+			Text = "Disconnected";
+			return;
+		}
 		int playerCount = owner.players.Count + 1;
 		// Text = $"Currently there are\n{playerCount} players";
 		if (playerCount > 1) {
