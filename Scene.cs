@@ -41,7 +41,7 @@ public class Scene : Node2D {
 	float debugAccumulator;
 	float debugBytes;
 
-	public bool IsConnectedToRelay => socket.GetConnectionStatus() == NetworkedMultiplayerPeer.ConnectionStatus.Connected;
+	public NetworkedMultiplayerPeer.ConnectionStatus ConnectionStatus => socket.GetConnectionStatus();
 
 	public Scene() {
 		AddToGroup("scene");
@@ -132,6 +132,19 @@ public class Scene : Node2D {
 	}
 
 	public override void _Process(float delta) {
+		switch (socket.GetConnectionStatus()) {
+			case NetworkedMultiplayerPeer.ConnectionStatus.Connecting:
+				return;
+			case NetworkedMultiplayerPeer.ConnectionStatus.Disconnected:
+				// @Note(sushi): try to reconnect every 15 seconds while disconnected
+				accumulator += delta;
+				if (accumulator > 15.0f) {
+					ConnectToRelay();
+					accumulator = 0;
+				}
+				return;
+		}
+
 		socket.Poll();
 
 		if (peer == null)
@@ -140,14 +153,6 @@ public class Scene : Node2D {
 		UpdateDebugPanel(delta);
 
 		accumulator += delta;
-		switch (socket.GetConnectionStatus()) {
-			case NetworkedMultiplayerPeer.ConnectionStatus.Connecting:
-				return;
-			case NetworkedMultiplayerPeer.ConnectionStatus.Disconnected:
-				if (accumulator > 15.0f)
-					ConnectToRelay();
-				return;
-		}
 
 		// @Note(sushi): this reduces the updates to be once a second if the player
 		//  has been standing in 1 spot for too long
