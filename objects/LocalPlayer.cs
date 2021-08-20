@@ -92,9 +92,9 @@ public class LocalPlayer : KinematicBody2D, IPlayer {
 		id = newId;
 		AnimatedSprite sprite;
 		if (isKing) {
-			sprite = GetNode("AnimatedKing") as AnimatedSprite;
-			sprite.QueueFree();
 			sprite = GetNode("AnimatedPleb") as AnimatedSprite;
+			sprite.QueueFree();
+			sprite = GetNode("AnimatedKing") as AnimatedSprite;
 		} else {
 			sprite = GetNode("AnimatedKing") as AnimatedSprite;
 			sprite.QueueFree();
@@ -110,12 +110,6 @@ public class LocalPlayer : KinematicBody2D, IPlayer {
 		camera.Zoom = new Vector2(0.5f, 0.5f);
 		camera.Current = true;
 		ZIndex = 100;
-		if (isKing) {
-			sprite = GetNode("AnimatedKing") as AnimatedSprite;
-		} else {
-			sprite = GetNode("AnimatedPleb") as AnimatedSprite;
-		}
-		sprite.Material = GD.Load("res://assets/outline_shader.tres") as Material;
 	}
 
 	public void Pop() {
