@@ -10,8 +10,8 @@ public class Scene : Node2D {
 	const string PLEB_KEY_FILE = "player.txt";
 	const int PACKET_SIZE = sizeof(int) + 2 + (4 * sizeof(float));
 
-	[Export]
-	public PackedScene playerScene;
+	[Export] public PackedScene localPlayerScene;
+	[Export] public PackedScene remotePlayerScene;
 
 	WebSocketClient socket = new WebSocketClient();
 	WebSocketPeer peer;
@@ -29,8 +29,8 @@ public class Scene : Node2D {
 
 	Vector2 startPos;
 
-	public Dictionary<uint, Player> players = new Dictionary<uint, Player>();
-	Player myPlayer;
+	public Dictionary<uint, RemotePlayer> players = new Dictionary<uint, RemotePlayer>();
+	LocalPlayer myPlayer;
 	Vector2 lastPos;
 	float afkAccumulator;
 
@@ -92,11 +92,10 @@ public class Scene : Node2D {
 		Position2D start = GetNode("Level/Start") as Position2D;
 		startPos = start.Position;
 
-		myPlayer = playerScene.Instance() as Player;
+		myPlayer = localPlayerScene.Instance() as LocalPlayer;
 		AddChild(myPlayer);
 		myPlayer.Position = startPos;
 		myPlayer.Init(id.Value, isMoon);
-		myPlayer.InitLocal(isMoon);
 
 		StartArea = GetNode("StartArea") as Area2D;
 		if (isMoon)
@@ -125,7 +124,7 @@ public class Scene : Node2D {
 	}
 
 	private void StartArea_Entered(Node body) {
-		if (!(body is Player player)) {
+		if (!(body is LocalPlayer player)) {
 			return;
 		}
 		player.hasStarted = true;
@@ -229,9 +228,9 @@ public class Scene : Node2D {
 			isMoon = data[offset + 4] == 1;
 
 			// check if the player exists, otherwise instance a new one
-			Player player;
+			RemotePlayer player;
 			if (!players.ContainsKey(id.Value)) {
-				player = playerScene.Instance() as Player;
+				player = remotePlayerScene.Instance() as RemotePlayer;
 				players[id.Value] = player;
 				AddChild(player);
 				player.Init(id.Value, isMoon);
@@ -261,9 +260,11 @@ public class Scene : Node2D {
 		GD.Print("Close request... " + code + " " + reason);
 	}
 
-	public void FreePlayer(Player player) {
-		if (players.ContainsKey(player.id)) {
-			players.Remove(player.id);
+	public void FreePlayer(uint playerId) {
+		Node2D player = null;
+		if (players.ContainsKey(playerId)) {
+			player = players[playerId];
+			players.Remove(playerId);
 		}
 		if (IsInstanceValid(player) && !player.IsQueuedForDeletion()) {
 			player.QueueFree();

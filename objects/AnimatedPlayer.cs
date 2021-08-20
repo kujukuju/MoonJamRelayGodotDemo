@@ -2,28 +2,30 @@ using Godot;
 using System;
 
 public class AnimatedPlayer : AnimatedSprite {
+	const float MAX_VELOCITY = 200;
+	const float FORCED_DEAD_TIME = 400;
 	const float EPSILON = 0.000001f;
 	const float MS_PER_FRAME = 100;
-	
-	Player player;
+
+	IPlayer player;
 	float deltaTime = 0;
 
 	public override void _Ready() {
-		player = GetParent() as Player;
+		player = GetParent() as IPlayer;
 	}
 
 	public override void _Process(float delta) {
 		// milliseconds
 		delta *= 1000;
-		
-		Vector2 velocity = player.velocity;
-		if (velocity[0] < -EPSILON) {
+
+		Vector2 velocity = player.Velocity;
+		if (velocity.x < -EPSILON) {
 			FlipH = false;
 		}
-		if (velocity[0] > EPSILON) {
+		if (velocity.x > EPSILON) {
 			FlipH = true;
 		}
-		
+
 		// do animation stuff
 		bool dead = player.dead;
 		bool falling = player.falling;
@@ -32,7 +34,7 @@ public class AnimatedPlayer : AnimatedSprite {
 		if (dead) {
 			Animation = "death";
 			if (player.remainingForcedDeadTime > 0) {
-				deltaTime = Player.FORCED_DEAD_TIME - player.remainingForcedDeadTime;
+				deltaTime = FORCED_DEAD_TIME - player.remainingForcedDeadTime;
 			} else {
 				deltaTime = player.remainingResurrectTime;
 			}
@@ -43,14 +45,14 @@ public class AnimatedPlayer : AnimatedSprite {
 		} else if (jumping) {
 			Animation = "jumping";
 			deltaTime = 0;
-		} else if (Math.Abs(velocity[0]) > EPSILON) {
+		} else if (Math.Abs(velocity.x) > EPSILON) {
 			Animation = "running";
-			deltaTime += Math.Abs(velocity[0]) / Player.MAX_VELOCITY * delta;
+			deltaTime += Math.Abs(velocity.x) / MAX_VELOCITY * delta;
 		} else {
 			Animation = "idle";
 			deltaTime += delta;
 		}
-		
+
 		if (loop) {
 			Frame = (int) (deltaTime / MS_PER_FRAME) % Frames.GetFrameCount(Animation);
 		} else {

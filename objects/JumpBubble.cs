@@ -19,7 +19,7 @@ public class JumpBubble : AnimatedSprite
 		delta *= 1000;
 
 		if (remainingPoppedTime < 0) {
-			foreach (Player player in area.GetOverlappingBodies()) {
+			foreach (LocalPlayer player in area.GetOverlappingBodies()) {
 				remainingPoppedTime = POP_COOLDOWN;
 				player.Pop();
 				break;
@@ -34,7 +34,7 @@ public class JumpBubble : AnimatedSprite
 	public void BodyEntered(Node body) {
 		if (remainingPoppedTime > 0)
 			return;
-		if (!(body is Player player))
+		if (!(body is LocalPlayer player))
 			return;
 		remainingPoppedTime = POP_COOLDOWN;
 		player.Pop();

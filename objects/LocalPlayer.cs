@@ -1,18 +1,18 @@
 using Godot;
 using System;
 
-public class Player : KinematicBody2D {
+public class LocalPlayer : KinematicBody2D, IPlayer {
 	public const float MAX_VELOCITY = 200;
 	public const float FORCED_DEAD_TIME = 400;
+	public const float EPSILON = 0.000001f;
 
-	const byte STATE_JUMPING   = 1 << 0;
-	const byte STATE_FALLING   = 1 << 1;
-	const byte STATE_DEAD      = 1 << 2;
-	const byte STATE_KILLABLE  = 1 << 3;
-	const byte STATE_JUST_DIED = 1 << 4;
-	const byte STATE_HAS_STARTED = 1 << 5;
+	public const byte STATE_JUMPING   = 1 << 0;
+	public const byte STATE_FALLING   = 1 << 1;
+	public const byte STATE_DEAD      = 1 << 2;
+	public const byte STATE_KILLABLE  = 1 << 3;
+	public const byte STATE_JUST_DIED = 1 << 4;
+	public const byte STATE_HAS_STARTED = 1 << 5;
 
-	const float EPSILON = 0.000001f;
 	[Export] float ACCEL = 2.5f;
 	[Export] float AIR_ACCEL = 2.5f;
 	[Export] float FRICTION = 1;
@@ -24,25 +24,29 @@ public class Player : KinematicBody2D {
 	[Export] float POP_TIME = 1000;
 	[Export] float WALLJUMP_GRACE_TIME = 300;
 
-	public uint id;
-	public Vector2 velocity = new Vector2(0, 0);
-	public bool jumping = false;
-	public bool falling = false;
-	public float remainingPoppedTime = 0;
-	public float remainingForcedDeadTime = 0;
-	public float remainingResurrectTime = 0;
-	public bool dead = false;
-	public bool killable = true;
-	public bool justDied = false;
-	public float walljumpGrace = 0;
+	public uint id { get; set; }
+	public Vector2 velocity;
+	public Vector2 Velocity {
+		get {
+			return velocity;
+		}
+		set {
+			velocity = value;
+		}
+	}
+	public bool jumping { get; set; }
+	public bool falling { get; set; }
+	public float remainingPoppedTime { get; set; }
+	public float remainingForcedDeadTime { get; set; }
+	public float remainingResurrectTime { get; set; }
+	public bool dead { get; set; }
+	public bool killable { get; set; }
+	public bool justDied { get; set; }
+	public float walljumpGrace { get; set; }
 
-	public bool hasStarted = false;
+	public bool hasStarted { get; set; }
 
-	public float timeSinceLastUpdate = 0.0f;
-
-	delegate void ProcessFunc(float delta);
-
-	ProcessFunc process;
+	public float timeSinceLastUpdate { get; set; }
 
 	public byte RemoteState {
 		get {
@@ -82,21 +86,23 @@ public class Player : KinematicBody2D {
 
 	public override void _Ready() {
 		AddToGroup("players");
-		process = RemoteProcess;
 	}
 
 	public void Init(uint newId, bool isKing) {
 		id = newId;
+		AnimatedSprite sprite;
 		if (isKing) {
-			GetNode("AnimatedPleb").QueueFree();
-			return;
+			sprite = GetNode("AnimatedKing") as AnimatedSprite;
+			sprite.QueueFree();
+			sprite = GetNode("AnimatedPleb") as AnimatedSprite;
+		} else {
+			sprite = GetNode("AnimatedKing") as AnimatedSprite;
+			sprite.QueueFree();
+			sprite = GetNode("AnimatedPleb") as AnimatedSprite;
 		}
-		GetNode("AnimatedKing").QueueFree();
-	}
+		sprite.Material = GD.Load("res://assets/outline_shader.tres") as Material;
 
-	public void InitLocal(bool isKing) {
 		AddToGroup("local_player");
-		process = LocalProcess;
 		Camera2D camera = new Camera2D();
 		// this enables bubble interactions just for the local player
 		CollisionMask |= 1 << 1;
@@ -104,7 +110,6 @@ public class Player : KinematicBody2D {
 		camera.Zoom = new Vector2(0.5f, 0.5f);
 		camera.Current = true;
 		ZIndex = 100;
-		AnimatedSprite sprite;
 		if (isKing) {
 			sprite = GetNode("AnimatedKing") as AnimatedSprite;
 		} else {
@@ -120,13 +125,6 @@ public class Player : KinematicBody2D {
 	}
 
 	public override void _PhysicsProcess(float delta) {
-		if (process == null)
-			return;
-		process(delta);
-	}
-
-	// this is only run on the local player
-	public void LocalProcess(float delta) {
 		// milliseconds
 		delta *= 1000;
 
@@ -282,28 +280,6 @@ public class Player : KinematicBody2D {
 		velocity.y += gravity;
 		falling = !IsOnFloor() && velocity.y > EPSILON;
 
-		velocity = MoveAndSlide(velocity, new Vector2(0, -1), false, 4, (float) Math.PI / 16, true);
-	}
-
-	// this is only run on remote players
-	public void RemoteProcess(float delta) {
-		delta *= 1000;
-
-		timeSinceLastUpdate += delta;
-		if (timeSinceLastUpdate > 4000) {
-			var nodes = GetTree().GetNodesInGroup("scene");
-			if (nodes.Count > 0) {
-				Scene scene = nodes[0] as Scene;
-				scene.FreePlayer(this);
-			}
-			return;
-		}
-		if (dead) {
-			remainingForcedDeadTime = Math.Max(remainingForcedDeadTime - delta, 0);
-			if (remainingForcedDeadTime == 0 && velocity.Length() < EPSILON && remainingResurrectTime > 0) {
-				remainingResurrectTime = Math.Max(remainingResurrectTime - delta, 0);
-			}
-		}
 		velocity = MoveAndSlide(velocity, new Vector2(0, -1), false, 4, (float) Math.PI / 16, true);
 	}
 }
