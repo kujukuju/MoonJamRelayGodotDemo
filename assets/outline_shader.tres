@@ -1,31 +1,28 @@
 [gd_resource type="ShaderMaterial" load_steps=2 format=2]
 
-[sub_resource type="Shader" id=52]
+[sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
 render_mode blend_mix;
 
 uniform vec4 outlineColor : hint_color = vec4(1.0, 1.0, 1.0, 1.0);
 
-void fragment()
-{
-    vec4 tcol = texture(TEXTURE, UV);
+void fragment() {
+	vec4 color = texture(TEXTURE, UV);
+	float isEdge = 1.0 - round(color.a);
 
-    if (tcol.a == 0.0)
-    {
-        if (texture(TEXTURE, UV + vec2(0.0,          TEXTURE_PIXEL_SIZE.y)).a  != 0.0 ||
-            texture(TEXTURE, UV + vec2(0.0,         -TEXTURE_PIXEL_SIZE.y)).a  != 0.0 ||
-            texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x,  0.0)).a          != 0.0 ||
-            texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x, 0.0)).a          != 0.0 ||
-            texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x, TEXTURE_PIXEL_SIZE.y)).a  != 0.0 ||
-            texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x, -TEXTURE_PIXEL_SIZE.y)).a != 0.0 ||
-            texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x,  TEXTURE_PIXEL_SIZE.y)).a  != 0.0 ||
-            texture(TEXTURE, UV + vec2(TEXTURE_PIXEL_SIZE.x,  -TEXTURE_PIXEL_SIZE.y)).a != 0.0) 
-            tcol = outlineColor;
-    }
+	isEdge *= 	round(texture(TEXTURE, UV + vec2(0.0,  TEXTURE_PIXEL_SIZE.y)).a) + // top
+				round(texture(TEXTURE, UV + vec2(0.0, -TEXTURE_PIXEL_SIZE.y)).a) + // bottom
+				round(texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x, 0.0)).a) + // left
+				round(texture(TEXTURE, UV + vec2( TEXTURE_PIXEL_SIZE.x, 0.0)).a) + // right
+				round(texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x,  TEXTURE_PIXEL_SIZE.y)).a) + // top left
+				round(texture(TEXTURE, UV + vec2( TEXTURE_PIXEL_SIZE.x,  TEXTURE_PIXEL_SIZE.y)).a) + // top right
+				round(texture(TEXTURE, UV + vec2(-TEXTURE_PIXEL_SIZE.x, -TEXTURE_PIXEL_SIZE.y)).a) + // bottom left
+				round(texture(TEXTURE, UV + vec2( TEXTURE_PIXEL_SIZE.x, -TEXTURE_PIXEL_SIZE.y)).a);  // bottom right
 
-    COLOR = tcol;
+	isEdge = clamp(isEdge, 0.0, 1.0);
+	COLOR = mix(color, outlineColor, isEdge);
 }"
 
 [resource]
-shader = SubResource( 52 )
+shader = SubResource( 1 )
 shader_param/outlineColor = Color( 0.67451, 0.827451, 1, 1 )

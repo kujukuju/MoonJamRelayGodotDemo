@@ -4,10 +4,17 @@ using System.Diagnostics;
 using Godot;
 
 public class Scene : Node2D {
-	const float TICK_RATE = 1.0f / 20;
 	const string RELAY_URL = "wss://relay.moonjam.dev/v1";
 	const string MOON_KEY_FILE = "moon.txt";
 	const string PLEB_KEY_FILE = "player.txt";
+
+	// with 300mbps~ upload on the relay, we get about 37.5MB/s outgoing traffic
+	// the traffic will be measured as such:
+	//   BPS = PACKET_SIZE * TICK_PER_SECOND
+	//   37500000 = BPS*x*x - BPS*x
+	// the positive root will be the theoretical limit for number of players, since
+	//  outgoing traffic on the relay grows geometrically, where incoming is linear
+	const float TICK_RATE = 1.0f / 15;
 	const int PACKET_SIZE = sizeof(int) + 2 + (4 * sizeof(float));
 
 	[Export] public PackedScene localPlayerScene;
@@ -21,13 +28,14 @@ public class Scene : Node2D {
 	//  1 : moon flag
 	//  1 : player flags
 	//  16: 4*float for pos/vel
+	// this could be optimized by using a 24-bit id, packing the flags and
+	//  into the id as well as using short/half precision values for pos/vel
+	// it would bring down the total to 16 vs 26 outgoing, and 12 vs 22 incoming
 	byte[] sendBuffer = new byte[4 + PACKET_SIZE];
 	UIntToByteLE id = new UIntToByteLE();
 	bool isMoon = false;
 	float[] movementBuffer = new float[4];
 	float accumulator;
-
-	Vector2 startPos;
 
 	public Dictionary<uint, RemotePlayer> players = new Dictionary<uint, RemotePlayer>();
 	LocalPlayer myPlayer;
@@ -90,11 +98,9 @@ public class Scene : Node2D {
 		ConnectToRelay();
 
 		Position2D start = GetNode("Level/Start") as Position2D;
-		startPos = start.Position;
-
 		myPlayer = localPlayerScene.Instance() as LocalPlayer;
 		AddChild(myPlayer);
-		myPlayer.Position = startPos;
+		myPlayer.Position = start.Position;
 		myPlayer.Init(id.Value, isMoon);
 
 		StartArea = GetNode("StartArea") as Area2D;

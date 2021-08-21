@@ -12,6 +12,8 @@ public class RemotePlayer : Node2D, IPlayer {
 	public const byte STATE_JUST_DIED = 1 << 4;
 	public const byte STATE_HAS_STARTED = 1 << 5;
 
+	// @Note(sushi): most of these properties are just here
+	//  so we can animate the sprite
 	public uint id { get; set; }
 	public Vector2 velocity;
 	public Vector2 Velocity {
@@ -80,7 +82,7 @@ public class RemotePlayer : Node2D, IPlayer {
 		id = newId;
 		AnimatedSprite sprite;
 		if (isKing) {
-			sprite = GetNode("AnimatedKing") as AnimatedSprite;
+			sprite = GetNode("AnimatedPleb") as AnimatedSprite;
 		} else {
 			sprite = GetNode("AnimatedKing") as AnimatedSprite;
 		}
