@@ -17,5 +17,5 @@ public interface IPlayer {
 
 	float timeSinceLastUpdate { get; set; }
 
-    byte RemoteState { get; set; }
+	byte RemoteState { get; set; }
 }

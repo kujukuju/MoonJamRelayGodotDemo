@@ -4,9 +4,10 @@ using System.Diagnostics;
 using Godot;
 
 public class Scene : Node2D {
-	const string RELAY_URL = "wss://relay.moonjam.dev/v1";
+	const string RELAY_URL = "ws://localhost:58008";
+	// const string RELAY_URL = "wss://relay.moonjam.dev/v1";
 	const string MOON_KEY_FILE = "moon.txt";
-	const string PLEB_KEY_FILE = "player.txt";
+	const string PLEB_KEY = "NQqB";
 
 	// with 300mbps~ upload on the relay, we get about 37.5MB/s outgoing traffic
 	// the traffic will be measured as such:
@@ -14,14 +15,13 @@ public class Scene : Node2D {
 	//   37500000 = BPS*x*x - BPS*x
 	// the positive root will be the theoretical limit for number of players, since
 	//  outgoing traffic on the relay grows geometrically, where incoming is linear
-	const float TICK_RATE = 1.0f / 15;
-	const string RELAY_URL = "ws://localhost:58008";
-	const string MOON_KEY_FILE = "moon.txt";
-	const string PLEB_KEY = "NQqB";
+	public const float TICK_RATE = 1.0f / 15;
 	const int PACKET_SIZE = sizeof(int) + 2 + (4 * sizeof(float));
 
 	[Export] public PackedScene localPlayerScene;
 	[Export] public PackedScene remotePlayerScene;
+	
+	public static long renderTime;
 
 	WebSocketClient socket = new WebSocketClient();
 	WebSocketPeer peer;
@@ -80,12 +80,6 @@ public class Scene : Node2D {
 		if (key == null) {
 			key = PLEB_KEY;
 			isMoon = false;
-		}
-		// key files were missing, the game will run but the player will be alone
-		// @Note(sushi): probably add a warning for this?
-		if (key == null || key.Length < 4) {
-			GD.Print("No valid key found.");
-			key = "pleb";
 		}
 
 		// set the first 4 bytes of the buffer to the lobby key
@@ -146,6 +140,8 @@ public class Scene : Node2D {
 	}
 
 	public override void _Process(float delta) {
+		renderTime = DateTimeOffset.UtcNow.ToUnixTimeMilliseconds();
+		
 		socket.Poll();
 		ResizePlayerCount();
 
@@ -257,8 +253,13 @@ public class Scene : Node2D {
 			// copy the movement floats into the buffer, ignoring the id/state bytes
 			Buffer.BlockCopy(data, offset + 6, movementBuffer, 0, movementBuffer.Length * 4);
 
-			player.Position = new Vector2(movementBuffer[0], movementBuffer[1]);
-			player.velocity = new Vector2(movementBuffer[2], movementBuffer[3]);
+			player.positions[0] = player.positions[1];
+			player.positions[1] = new Vector2(movementBuffer[0], movementBuffer[1]);
+			player.velocities[0] = player.velocities[1];
+			player.velocities[1] = new Vector2(movementBuffer[2], movementBuffer[3]);
+			player.Velocity = player.velocities[1];
+			player.times[0] = player.times[1];
+			player.times[1] = renderTime;
 
 			if (player.hasStarted)
 				HasStarted = true;

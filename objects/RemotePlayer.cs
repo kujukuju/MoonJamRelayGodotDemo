@@ -15,6 +15,9 @@ public class RemotePlayer : Node2D, IPlayer {
 	// @Note(sushi): most of these properties are just here
 	//  so we can animate the sprite
 	public uint id { get; set; }
+	public long[] times = new long[2];
+	public Vector2[] positions = new Vector2[2];
+	public Vector2[] velocities = new Vector2[2];
 	public Vector2 velocity;
 	public Vector2 Velocity {
 		get {
@@ -88,9 +91,25 @@ public class RemotePlayer : Node2D, IPlayer {
 		}
 		sprite.QueueFree();
 	}
+	
+	public Vector2 GetInterpolatedPosition(long time) {
+		if (times[1] == 0 && times[0] == 0) {
+			return Position;
+		}
+		
+		if (times[1] == 0) {
+			return positions[0];
+		}
+		
+		// get the interpolation of the render time between the networked times
+		float t = (float) (time - times[0]) / (float) (times[1] - times[0]);
+		t = Math.Max(Math.Min(t, 1.0f), 0.0f);
+		
+		return HermiteInterpolation(positions[0], positions[1], velocities[0] * Scene.TICK_RATE, velocities[1] * Scene.TICK_RATE, t);
+	}
 
 	public override void _PhysicsProcess(float delta) {
-		Position += velocity * delta;
+		Position = GetInterpolatedPosition(Scene.renderTime - (long) (Scene.TICK_RATE * 1000));
 
 		delta *= 1000;
 
@@ -109,5 +128,18 @@ public class RemotePlayer : Node2D, IPlayer {
 				remainingResurrectTime = Math.Max(remainingResurrectTime - delta, 0);
 			}
 		}
+	}
+	
+	Vector2 HermiteInterpolation(Vector2 point1, Vector2 point2, Vector2 vel1, Vector2 vel2, float t) {
+		float n1 = 2.0f * t * t * t - 3.0f * t * t + 1.0f;
+		float n2 = t * t * t - 2.0f * t * t + t;
+		float n3 = -2.0f * t * t * t + 3.0f * t * t;
+		float n4 = t * t * t - t * t;
+
+		Vector2 vector;
+		vector.x = n1 * point1.x + n2 * vel1.x + n3 * point2.x + n4 * vel2.x;
+		vector.y = n1 * point1.y + n2 * vel1.y + n3 * point2.y + n4 * vel2.y;
+
+		return vector;
 	}
 }
