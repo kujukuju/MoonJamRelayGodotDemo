@@ -6,7 +6,7 @@ using Godot;
 public class Scene : Node2D {
 	const string RELAY_URL = "wss://relay.moonjam.dev/v1";
 	const string MOON_KEY_FILE = "moon.txt";
-	const string PLEB_KEY = "NQqB";
+	const string PLEB_KEY = "5Wr1";
 
 	// with 300mbps~ upload on the relay, we get about 37.5MB/s outgoing traffic
 	// the traffic will be measured as such:
