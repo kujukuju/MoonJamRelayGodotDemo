@@ -4,8 +4,7 @@ using System.Diagnostics;
 using Godot;
 
 public class Scene : Node2D {
-	const string RELAY_URL = "ws://localhost:58008";
-	// const string RELAY_URL = "wss://relay.moonjam.dev/v1";
+	const string RELAY_URL = "wss://relay.moonjam.dev/v1";
 	const string MOON_KEY_FILE = "moon.txt";
 	const string PLEB_KEY = "NQqB";
 
