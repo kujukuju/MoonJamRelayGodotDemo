@@ -5,8 +5,9 @@ using Godot;
 
 public class Scene : Node2D {
 	const string RELAY_URL = "wss://relay.moonjam.dev/v1";
-	const string MOON_KEY_FILE = "moon.txt";
-	const string PLEB_KEY = "NQqB";
+	const bool MOON = false;
+	const string MOON_KEY = "oE7y";
+	const string PLEB_KEY = "UO97";
 
 	// with 300mbps~ upload on the relay, we get about 37.5MB/s outgoing traffic
 	// the traffic will be measured as such:
@@ -35,7 +36,6 @@ public class Scene : Node2D {
 	// it would bring down the total to 16 vs 26 outgoing, and 12 vs 22 incoming
 	byte[] sendBuffer = new byte[4 + PACKET_SIZE];
 	UIntToByteLE id = new UIntToByteLE();
-	bool isMoon = false;
 	float[] movementBuffer = new float[4];
 	float accumulator;
 
@@ -71,14 +71,12 @@ public class Scene : Node2D {
 		InitDebugContainer();
 
 		// try loading moon's lobby key first
-		string key = LoadKey(MOON_KEY_FILE);
+		string key = MOON_KEY;
 		id.Value = GD.Randi();
-		isMoon = true;
 
 		// if we don't find it, then join as a pleb
-		if (key == null) {
+		if (!MOON) {
 			key = PLEB_KEY;
-			isMoon = false;
 		}
 
 		// set the first 4 bytes of the buffer to the lobby key
@@ -89,7 +87,7 @@ public class Scene : Node2D {
 		sendBuffer[6] = id.B2;
 		sendBuffer[7] = id.B3;
 		// the next 1 byte is reserved for the flag of whether or not this is moonmoon
-		sendBuffer[8] = isMoon ? (byte) 1 : (byte) 0;
+		sendBuffer[8] = MOON ? (byte) 1 : (byte) 0;
 
 		ConnectToRelay();
 
@@ -97,10 +95,10 @@ public class Scene : Node2D {
 		myPlayer = localPlayerScene.Instance() as LocalPlayer;
 		AddChild(myPlayer);
 		myPlayer.Position = start.Position;
-		myPlayer.Init(id.Value, isMoon);
+		myPlayer.Init(id.Value, MOON);
 
 		StartArea = GetNode("StartArea") as Area2D;
-		if (isMoon)
+		if (MOON)
 			StartArea.Connect("body_entered", this, nameof(StartArea_Entered));
 		EndArea = GetNode("EndArea") as Area2D;
 		EndArea.Connect("body_entered", this, nameof(EndArea_Entered));
@@ -229,7 +227,7 @@ public class Scene : Node2D {
 			id.B1 = data[offset + 1];
 			id.B2 = data[offset + 2];
 			id.B3 = data[offset + 3];
-			isMoon = data[offset + 4] == 1;
+			bool isMoon = data[offset + 4] == 1;
 
 			// check if the player exists, otherwise instance a new one
 			RemotePlayer player;
